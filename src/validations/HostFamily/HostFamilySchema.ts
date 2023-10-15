@@ -1,7 +1,7 @@
 import Joi from "joi";
 
-export const HostFamilySchema = Joi.object({
-    personal_info: Joi.object({
+export const HostFamilySchema = Joi.object().keys({
+    personal_info: Joi.object().keys({
         family_id: Joi.string().required(),
         first_name: Joi.string().required(),
         last_name: Joi.string().required(),

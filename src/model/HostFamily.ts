@@ -48,6 +48,9 @@ const personalInfoSchema : Schema = new Schema<IPersonalInfo>({
     land_line: String,
     email: String,
     contact: String,
+},{
+    _id : false,
+    id : false
 });
 
 const specificationSchema = new Schema<ISpecification>({
@@ -59,6 +62,9 @@ const specificationSchema = new Schema<ISpecification>({
     preference: String,
     notes: String,
     description: String,
+},{
+    _id : false,
+    id : false
 });
 
 const bankDetailsSchema = new Schema<IBankDetails>({
@@ -66,6 +72,9 @@ const bankDetailsSchema = new Schema<IBankDetails>({
     bank_name: String,
     sort_code: String,
     account_holder_name: String,
+},{
+    _id : false,
+    id : false
 });
 
 
@@ -73,7 +82,8 @@ const HostFamilySchema:Schema = new Schema({
     personal_info : personalInfoSchema,
     specifications : specificationSchema,
     bank_details : bankDetailsSchema,
-    created_by : Schema.Types.ObjectId
-});
+    created_by : Schema.Types.ObjectId,
+
+},{ timestamps: true });
 
 export default model<IHostFamily>("HostFamily",HostFamilySchema);
