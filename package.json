@@ -20,6 +20,7 @@
     "@types/jsonwebtoken": "^9.0.1",
     "@types/passport": "^1.0.12",
     "@types/passport-jwt": "^3.0.8",
+    "@types/pdfkit": "^0.13.0",
     "nodemon": "^2.0.22",
     "npm-run-all": "^4.1.5",
     "ts-node": "^10.9.1",
@@ -36,6 +37,7 @@
     "mongodb": "^6.1.0",
     "mongoose": "^7.0.3",
     "passport": "^0.6.0",
-    "passport-jwt": "^4.0.1"
+    "passport-jwt": "^4.0.1",
+    "pdfkit": "^0.13.0"
   }
 }

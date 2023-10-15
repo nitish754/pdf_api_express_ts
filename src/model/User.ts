@@ -74,6 +74,6 @@ const UserSchema:Schema = new Schema({
         type : Boolean,
         default : false
     }
-})
+},{timestamps:true})
 
 export default model<IUser>("User",UserSchema)
