@@ -33,7 +33,7 @@ interface IBankDetails{
 
 interface IHostFamily extends Document{
     personal_info : IPersonalInfo,
-    specification : ISpecification,
+    specifications : ISpecification,
     bank_details : IBankDetails,
     created_by : ObjectId
 }
