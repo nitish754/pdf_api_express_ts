@@ -4,6 +4,8 @@ import { AddTaskValidation } from '../validations/TaskValidation/TaskValidation'
 import { Login, SignUp } from '../controllers/UserController';
 import { LoginValidation, SignupValidation } from '../validations/user/UserValidation';
 import { authChecker } from '../middleware/authChecker';
+import { AddHostFamilyValidation } from '../validations/HostFamily/HostFamilyValidation';
+import { AddHostFamily, HostFamilyList } from '../controllers/HostFamilyController';
 
 const router = Router();
 /**
@@ -20,4 +22,8 @@ router.post('/auth/login',LoginValidation,Login)
  * routes accessible with authenticationn
  */
 router.post('/add-task',authChecker,AddTaskValidation,addTask)
+
+router.post('/add-host-family',authChecker,AddHostFamilyValidation,AddHostFamily)
+router.get('/host-family',authChecker,HostFamilyList);
+
 export default router;

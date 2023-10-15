@@ -62,6 +62,10 @@ const UserSchema:Schema = new Schema({
         type : String,
         default : null
     },
+    profile_url : {
+        type : String,
+        default : null
+    },
     verifyToken : {
         type : String,
         default : null
