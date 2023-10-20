@@ -7,8 +7,12 @@ import { errorHandler } from './middleware/errorHandler'
 import passport from 'passport'
 import Mpassport from './middleware/passport'
 import cookieParser from "cookie-parser";
+import cors from 'cors'
 
 const app = express()
+
+// cors for all routes 
+app.use(cors());
 
 app.get("/", (req,res,next) => {
     res.json({
