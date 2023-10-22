@@ -5,7 +5,11 @@ import { Login, SignUp } from '../controllers/UserController';
 import { LoginValidation, SignupValidation } from '../validations/user/UserValidation';
 import { authChecker } from '../middleware/authChecker';
 import { AddHostFamilyValidation, UpdateHostFamilyValidation } from '../validations/HostFamily/HostFamilyValidation';
-import { AddHostFamily, GeneratePdf, HostFamilyList, UpdateFamily, findFamilyById } from '../controllers/HostFamilyController';
+import { AddHostFamily, DeleteHostFamily, GeneratePdf, HostFamilyList, UpdateFamily, findFamilyById } from '../controllers/HostFamilyController';
+import { AddStudyGroupValidation, UpdateStudyGroupValidation } from '../validations/StudyGroup/StudyGroupValidation';
+import { AddStudentToGroup, FetchGroupStudent, GroupStudentById,UpdateGroupStudent } from '../controllers/GroupStudentController';
+import { AddStudyGroup, DeleteStudyGroup, StudyGroupById, StudyGroupList, UpdateStudyGroup } from '../controllers/StudyGroupController';
+import { AddGroupStudentPayload, UpdateGroupStudentPayload } from '../validations/GroupStudent/GroupStudentValidation';
 
 const router = Router();
 /**
@@ -27,6 +31,21 @@ router.post('/add-host-family',authChecker,AddHostFamilyValidation,AddHostFamily
 router.get('/host-family',authChecker,HostFamilyList);
 router.get('/host-family/:id',authChecker,findFamilyById);
 router.put('/host-family/:id/update',authChecker,UpdateHostFamilyValidation,UpdateFamily);
+router.delete('/host-family/:id/delete',authChecker,DeleteHostFamily);
 router.get('/host-family/:id/download-pdf',authChecker,GeneratePdf)
+
+// Study Group Routes 
+router.get('/study-group',authChecker,StudyGroupList);
+router.post('/add-study-group',authChecker,AddStudyGroupValidation,AddStudyGroup)
+router.get('/study-group/:id/details',authChecker,StudyGroupById)
+router.put('/study-group/:id/update',authChecker,UpdateStudyGroupValidation,UpdateStudyGroup)
+router.delete('study-group/:id/delete',authChecker,DeleteStudyGroup)
+
+// Group Student routes
+router.get('/study-group/:id/stuents',authChecker,FetchGroupStudent)
+router.post('/study-group/:id/student',authChecker,AddGroupStudentPayload,AddStudentToGroup)
+router.get('/study-group/:id/student/:id/details',authChecker,GroupStudentById)
+router.put('/study-group/:id/student/:id/update',authChecker,UpdateGroupStudentPayload,UpdateGroupStudent)
+
 
 export default router;

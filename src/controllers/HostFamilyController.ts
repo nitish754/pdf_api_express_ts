@@ -74,6 +74,27 @@ export const UpdateFamily: RequestHandler = async (req, res, next) => {
     }
 }
 
+export const DeleteHostFamily:RequestHandler = async(req,res,next) => {
+    try{
+
+        const deleteFamily = await HostFamily.findByIdAndDelete(req.params.id);
+
+        if(deleteFamily)
+        {
+            res.status(200).json({
+                message : 'Family deleted successfully'
+            });
+        }
+        res.status(400).json({
+            message : 'There is something went wrong'
+        })
+    }
+    catch(error)
+    {
+        return next(createHttpError.InternalServerError)
+    }
+}
+
 export const GeneratePdf: RequestHandler = async (req, res, next) => {
     try {
         // fetch data by id 
