@@ -12,10 +12,11 @@ export const GroupStudentSchema = {
         allergy: Joi.string().required().label('Allergy'),
         document_number: Joi.string().required().label('Document Number'),
         date_of_expiry: Joi.date().iso().required().label('Date of Expiry'),
-        country_of_issue: Joi.date().iso().required().label('Country of Issue'),
+        country_of_issue: Joi.string().required().label('Country of Issue'),
         allergy_to: Joi.array().items(Joi.string()).required().label('Allergies'),
         email: Joi.string().email().required().label('Email'),
         contact_number: Joi.string().required().label('Contact Number'),
+        // study_group_id: Joi.string().required().label('Group id')
     }),
     updateGroupStudent: Joi.object().keys({
 

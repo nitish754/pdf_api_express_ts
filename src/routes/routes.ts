@@ -39,10 +39,10 @@ router.get('/study-group',authChecker,StudyGroupList);
 router.post('/add-study-group',authChecker,AddStudyGroupValidation,AddStudyGroup)
 router.get('/study-group/:id/details',authChecker,StudyGroupById)
 router.put('/study-group/:id/update',authChecker,UpdateStudyGroupValidation,UpdateStudyGroup)
-router.delete('study-group/:id/delete',authChecker,DeleteStudyGroup)
+router.delete('/study-group/:id/destroy',authChecker,DeleteStudyGroup)
 
 // Group Student routes
-router.get('/study-group/:id/stuents',authChecker,FetchGroupStudent)
+router.get('/study-group/:id/students',authChecker,FetchGroupStudent)
 router.post('/study-group/:id/student',authChecker,AddGroupStudentPayload,AddStudentToGroup)
 router.get('/study-group/:id/student/:id/details',authChecker,GroupStudentById)
 router.put('/study-group/:id/student/:id/update',authChecker,UpdateGroupStudentPayload,UpdateGroupStudent)

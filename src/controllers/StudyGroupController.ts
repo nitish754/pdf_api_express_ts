@@ -4,20 +4,55 @@ import StudyGroup from "../model/StudyGroup";
 
 
 export const StudyGroupList: RequestHandler = async (req, res, next) => {
+    try {
+        const Groups = await StudyGroup.aggregate([
+            {
+                $lookup: {
+                    'from': 'groupstudents',
+                    'localField': '_id',
+                    'foreignField': 'study_group_id',
+                    'as': 'students'
+                },
 
+            },
+            {
+                $project: {
+                    _id: 1,
+                    group_id: 1,
+                    group_name: 1,
+                    contact_number: 1,
+                    country_origin: 1,
+                    teacher_responsible: 1,
+                    email: 1,
+                    nationality: 1,
+                    program_name: 1,
+                    arrival_date: 1,
+                    departure_date: 1,
+                    totalStudents: { $size: '$students' }
+                }
+            }
+        ]);
+
+        res.status(200).json({
+            'status': 'success',
+            'message': 'Group reterived successfully',
+            'data': Groups
+        })
+    }
+    catch (error) {
+        return next(createHttpError.InternalServerError)
+    }
 }
 
 export const AddStudyGroup: RequestHandler = async (req, res, next) => {
     try {
-        const validateGroupId = await StudyGroup.findOne({group_id: req.body.group_id}).count();
-        const validateGroupName = await StudyGroup.findOne({group_name: req.body.group_name}).count();
-        if(validateGroupId > 0)
-        {
-            return next(createHttpError(422,'Group Id is alredy taken'))
+        const validateGroupId = await StudyGroup.findOne({ group_id: req.body.group_id }).count();
+        const validateGroupName = await StudyGroup.findOne({ group_name: req.body.group_name }).count();
+        if (validateGroupId > 0) {
+            return next(createHttpError(422, 'Group Id is alredy taken'))
         }
-        if(validateGroupName > 0)
-        {
-            return next(createHttpError(422,'Group Name already taken'))
+        if (validateGroupName > 0) {
+            return next(createHttpError(422, 'Group Name already taken'))
         }
         const add = await StudyGroup.create(req.body);
 
@@ -34,26 +69,60 @@ export const AddStudyGroup: RequestHandler = async (req, res, next) => {
 }
 
 export const StudyGroupById: RequestHandler = async (req, res, next) => {
-    try{
+    try {
         const data = await StudyGroup.findById(req.params.id);
 
         res.status(200).json({
-            'status' : 'success',
-            'message' : 'data reterived successfully',
-            'data' : data
+            'status': 'success',
+            'message': 'data reterived successfully',
+            'data': data
         })
-    }catch(error)
-    {
+    } catch (error) {
         return next(createHttpError.InternalServerError);
     }
 }
 
 export const UpdateStudyGroup: RequestHandler = async (req, res, next) => {
+    try {
+        const validateGroupId = await StudyGroup.findOne({ group_id: req.body.group_id });
+        const validateGroupName = await StudyGroup.findOne({ group_name: req.body.group_name });
+       
+        if (validateGroupId?._id.toString() != req.params.id.toString()){
+            return next(createHttpError(422, 'Group Id is already taken'))
+        }
+        if (validateGroupName?._id != req.params.id){
+            return next(createHttpError(422, 'Group Name already taken'))
+        }
 
+        // update study group data 
+        const update  = await StudyGroup.findByIdAndUpdate(req.params.id,req.body);
+
+        if(update)
+        {
+            res.status(204).json({
+                'status':'success',
+                'message' : 'Group Updated successfully'
+            })
+        }
+
+    }
+    catch (error) {
+        return next(createHttpError.InternalServerError)
+    }
 }
 
 export const DeleteStudyGroup: RequestHandler = async (req, res, next) => {
+        try{
+            const query = await StudyGroup.deleteOne({_id : req.params.id});
 
+            if(query)
+            {
+                res.status(204).json({});
+            }
+        }
+        catch(error){
+            return next(createHttpError.InternalServerError)
+        }
 }
 
 

@@ -11,11 +11,12 @@ export interface IGroupStudent extends Document{
     allergy : string,
     document_number : string,
     date_of_expiry : Date,
-    country_of_issue : Date,
+    country_of_issue : string,
     allergy_to :string[],
     email : string,
     contact_number : string,
-    study_group_id:ObjectId
+    study_group_id:ObjectId,
+    host_family_id : ObjectId
 }
 
 const GroupStudentSchema:Schema = new Schema({
@@ -29,16 +30,19 @@ const GroupStudentSchema:Schema = new Schema({
     allergy: String,
     document_number: String,
     date_of_expiry: Date,
-    country_of_issue: Date,
+    country_of_issue: String,
     allergy_to: [String],
     email: {
         type: String,
-        unique: true
+        default : null
     },
     contact_number: String,
     study_group_id: {
         type: Schema.Types.ObjectId,
-        ref: 'StudyGroup',
+        default : null
+    },
+    host_family_id : {
+        type : Schema.Types.ObjectId,
         default : null
     }
 })
