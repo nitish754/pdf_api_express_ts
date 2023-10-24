@@ -25,6 +25,8 @@ Mpassport(passport);
 app.use(cookieParser())
 app.use("/api",router);
 
+
+
 app.use(()=>{
     throw createHttpError(404, 'Route not found')
 })

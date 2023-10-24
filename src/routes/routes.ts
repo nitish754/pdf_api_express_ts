@@ -1,5 +1,5 @@
 import {Router} from 'express'
-import { addTask, getExample, getExample2 } from '../controllers/exampleController';
+import { addTask, checkHttpCall, getExample, getExample2 } from '../controllers/exampleController';
 import { AddTaskValidation } from '../validations/TaskValidation/TaskValidation';
 import { Login, SignUp } from '../controllers/UserController';
 import { LoginValidation, SignupValidation } from '../validations/user/UserValidation';
@@ -16,7 +16,8 @@ const router = Router();
  * testing routes
  */
 router.get("/",authChecker,getExample)
-router.get("/example",authChecker,getExample2)
+// router.get("/example",checkHttpCall)
+router.get("/check-call",checkHttpCall)
 /**
  * routes accessible without authentication
  */

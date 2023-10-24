@@ -42,18 +42,17 @@ export const Login:RequestHandler =async (req,res,next) => {
         if(!isValidPassword) return next(createHttpError(400, "Enter a valid password"))
 
         const token = jwt.sign(
-            {user},
-            // {
-            //     name : user.name,
-            //     email : user.email,
-            //     id : user._id
-            // },
+            {
+                name : user.name,
+                email : user.email,
+                _id : user._id
+            },
             JWT_KEY,
             {
-                expiresIn : "7d"
+                expiresIn : "1d"
             }
         )
-        res.cookie("jwt",token);
+        // res.cookie("jwt",token);
         res.json({
             status : "success",
             message : "Logged in successfully",
