@@ -46,7 +46,7 @@ router.delete('/study-group/:id/destroy',authChecker,DeleteStudyGroup)
 // Group Student routes
 router.get('/study-group/:id/students',authChecker,FetchGroupStudent)
 router.post('/study-group/:id/student',authChecker,AddGroupStudentPayload,AddStudentToGroup)
-router.get('/study-group/:id/student/:id/details',authChecker,GroupStudentById)
+router.get('/study-group/student/:id/details',authChecker,GroupStudentById)
 router.put('/study-group/:id/student/:id/update',authChecker,UpdateGroupStudentPayload,UpdateGroupStudent)
 
 

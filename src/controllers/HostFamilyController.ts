@@ -15,7 +15,7 @@ export const HostFamilyList: RequestHandler = async (req, res, next) => {
             filterField = { 'personal_info.name': search, 'personal_info.email': search, 'personal_info.contact': search }
         }
 
-        let hostFamily = await HostFamily.find(filterField).sort({ 'created_at': -1 });
+        let hostFamily = await HostFamily.find(filterField).sort({ _id: -1 });
 
         res.status(200).json({
             message: 'Data reterived successfully',

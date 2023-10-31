@@ -30,6 +30,9 @@ export const StudyGroupList: RequestHandler = async (req, res, next) => {
                     departure_date: 1,
                     totalStudents: { $size: '$students' }
                 }
+            },
+            {
+                $sort : {_id : -1}
             }
         ]);
 
