@@ -46,15 +46,52 @@ export const StudyGroupList: RequestHandler = async (req, res, next) => {
 
 export const AddStudyGroup: RequestHandler = async (req, res, next) => {
     try {
-        const validateGroupId = await StudyGroup.findOne({ group_id: req.body.group_id }).count();
+        const payload = req.body;
+        // const validateGroupId = await StudyGroup.findOne({ group_id: req.body.group_id }).count();
         const validateGroupName = await StudyGroup.findOne({ group_name: req.body.group_name }).count();
-        if (validateGroupId > 0) {
-            return next(createHttpError(422, 'Group Id is alredy taken'))
+        // if (validateGroupId > 0) {
+        //     return next(createHttpError(422, 'Group Id is alredy taken'))
+        // }
+        const group  = await StudyGroup.findOne({}).sort({_id : -1});
+     
+        let group_id = '';
+        if (group) {
+            
+            group_id = group?.group_id;
+
+            //    res.json(group_id);
+            
+            const match = group_id?.match(/00(\d+)/);
+            // res.json(match);
+
+            if (match && match[1]) {
+                let temp_id = parseInt(match[1])+1;
+
+                // res.json(temp_id);
+           
+                if(temp_id <= 9)
+                {
+                    group_id = 'NG000' + temp_id.toString();
+                }else{
+                    group_id = 'NG00' + temp_id.toString();
+                }
+                
+                
+            }
+            // group_id = 'NG0001'
+        } else {
+            group_id = 'NG0001';
         }
+
+        // res.json(family_id);
+
+        payload.group_id = group_id;
+        // res.json(payload);
+
         if (validateGroupName > 0) {
             return next(createHttpError(422, 'Group Name already taken'))
         }
-        const add = await StudyGroup.create(req.body);
+        const add = await StudyGroup.create(payload);
 
         res.status(201).json({
             'status': 'success',
@@ -84,12 +121,12 @@ export const StudyGroupById: RequestHandler = async (req, res, next) => {
 
 export const UpdateStudyGroup: RequestHandler = async (req, res, next) => {
     try {
-        const validateGroupId = await StudyGroup.findOne({ group_id: req.body.group_id });
+        // const validateGroupId = await StudyGroup.findOne({ group_id: req.body.group_id });
         const validateGroupName = await StudyGroup.findOne({ group_name: req.body.group_name });
        
-        if (validateGroupId?._id.toString() != req.params.id.toString()){
-            return next(createHttpError(422, 'Group Id is already taken'))
-        }
+        // if (validateGroupId?._id.toString() != req.params.id.toString()){
+        //     return next(createHttpError(422, 'Group Id is already taken'))
+        // }
         if (validateGroupName?._id != req.params.id){
             return next(createHttpError(422, 'Group Name already taken'))
         }

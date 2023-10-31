@@ -26,7 +26,7 @@ const optionsCookie = {
 export default (passport: PassportStatic) => {
   passport.use(
     new Strategy(optionsCookie, async (payload, done) => {
-      console.log("payload==>", payload);
+      // console.log("payload==>", payload);
 
       await User.findById(payload._id)
         .then((user) => {

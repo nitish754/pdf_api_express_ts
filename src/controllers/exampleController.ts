@@ -1,7 +1,10 @@
 import { RequestHandler } from "express";
 import TaskModel from '../model/Task';
 import createHttpError from 'http-errors'
-import axios from "axios";
+import puppeteer from "puppeteer";
+import fs from 'fs';
+import PDFDocument from 'pdfkit';
+
 
 export const getExample: RequestHandler = (req, res, next) => {
     res.json({
@@ -33,21 +36,48 @@ export const addTask: RequestHandler = async (req, res, next) => {
 
 }
 
+export const convertHtmlToPDF : RequestHandler =async (req,res,next) => {
+    const doc = new PDFDocument({ size: 'letter' });
+doc.pipe(fs.createWriteStream('design.pdf'));
+
+// Set background color
+doc.rect(0, 0, 612, 792).fillColor('#e0e0e0').fill();
+
+// Add text
+doc.fontSize(20);
+doc.fillColor('black');
+doc.text('Design PDF Example', { align: 'center' });
+
+// Add a rectangle
+doc.rect(100, 100, 400, 300).stroke();
+
+// Save and end the document
+doc.end();
+
+    
+}
+
 export const checkHttpCall: RequestHandler = async (req, res, next) => {
+
+    const auth_user = req.user;
+
+    console.log("auth",auth_user);
+
+    // res.json(auth_user?.name);
 
     // const instance = axios.create({
     //     withCredentials: true
     // });
 
-    console.log("JWT Token",req.cookies.jwt);
-    const http = await axios.get('http://localhost:3000/api/host-family', {
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTml0aXNoIEpoYSIsImVtYWlsIjoiZXJuaXRpc2gxOTkzQGdtYWlsLmNvbSIsIl9pZCI6IjY1MjAzNmFjMjllMTE2MWE0N2JjMGZhZSIsImlhdCI6MTY5ODEzOTEyOCwiZXhwIjoxNjk4MjI1NTI4fQ.D2XgUC72CkamGHm-AFVygVU_oGRt6owQoKoRuE8iLCo',
-        }
-    });
-    console.log("HTTP RESSPONSE",http.data);
-    res.json(http.data);
+    // console.log("JWT Token",req.cookies.jwt);
+    // const http = await axios.get('http://localhost:3000/api/host-family', {
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //         'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTml0aXNoIEpoYSIsImVtYWlsIjoiZXJuaXRpc2gxOTkzQGdtYWlsLmNvbSIsIl9pZCI6IjY1MjAzNmFjMjllMTE2MWE0N2JjMGZhZSIsImlhdCI6MTY5ODEzOTEyOCwiZXhwIjoxNjk4MjI1NTI4fQ.D2XgUC72CkamGHm-AFVygVU_oGRt6owQoKoRuE8iLCo',
+    //     }
+    // });
+    // console.log("HTTP RESSPONSE",http.data);
+    // res.json(http.data);
 
     // console.log(http);
 

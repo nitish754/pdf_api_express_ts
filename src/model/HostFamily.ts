@@ -1,10 +1,20 @@
+
 import { Schema,Document,model, ObjectId } from "mongoose";
 
 
 interface IPersonalInfo{
     family_id: string,
-    first_name: string,
-    last_name: string,
+    full_name: string,
+    postal_code: string,
+    bed_type : string,
+    no_of_bathroom : string,
+    no_of_bedroom : string,
+    no_of_student : string,
+    no_of_bedroom_for_student : string,
+    total_no_of_bed : string,
+    interests : string,
+    pets_at_home : string,
+    preference: string,
     address: string,
     country: string,
     city: string,
@@ -14,13 +24,18 @@ interface IPersonalInfo{
 }
 
 interface ISpecification{
-    interests: string[],
-    no_of_members: number,
-    number_of_bed: number,
-    is_pets_at_home: boolean,
-    is_dogs_at_home: boolean,
-    preference: string,
-    notes: string,
+    other_people_in_house : string,
+    is_wifi : boolean,
+    transport : string,
+    allergies : string,
+    is_smokers : boolean,
+    is_accomodate_smoker : boolean,
+    bus_route : string,
+    access_to_tv : boolean,
+    accomodate_food_intolerance : boolean,
+    spare_time_activities : string,
+    preffered_communication_method : string,
+    visit_report: string,
     description: string,
 }
 
@@ -40,8 +55,17 @@ interface IHostFamily extends Document{
 
 const personalInfoSchema : Schema = new Schema<IPersonalInfo>({
     family_id: String,
-    first_name: String,
-    last_name: String,
+    full_name: String,
+    postal_code:String,
+    bed_type : String,
+    no_of_bathroom : String,
+    no_of_bedroom : String,
+    no_of_bedroom_for_student : String,
+    no_of_student : String,
+    total_no_of_bed: String,
+    interests: String,
+    pets_at_home : String,
+    preference : String,
     address: String,
     country: String,
     city: String,
@@ -54,13 +78,18 @@ const personalInfoSchema : Schema = new Schema<IPersonalInfo>({
 });
 
 const specificationSchema = new Schema<ISpecification>({
-    interests: [String],
-    no_of_members: Number,
-    number_of_bed: Number,
-    is_pets_at_home: Boolean,
-    is_dogs_at_home: Boolean,
-    preference: String,
-    notes: String,
+    other_people_in_house: String,
+    is_wifi: Boolean,
+    transport: String,
+    allergies: String,
+    is_smokers: Boolean,
+    is_accomodate_smoker: Boolean,
+    bus_route: String,
+    access_to_tv: Boolean,
+    accomodate_food_intolerance: Boolean,
+    spare_time_activities: String,
+    preffered_communication_method: String,
+    visit_report: String,
     description: String,
 },{
     _id : false,
@@ -85,5 +114,6 @@ const HostFamilySchema:Schema = new Schema({
     created_by : Schema.Types.ObjectId,
 
 },{ timestamps: true });
+
 
 export default model<IHostFamily>("HostFamily",HostFamilySchema);

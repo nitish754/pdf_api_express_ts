@@ -1,5 +1,5 @@
 import {Router} from 'express'
-import { addTask, checkHttpCall, getExample, getExample2 } from '../controllers/exampleController';
+import { addTask, checkHttpCall, convertHtmlToPDF, getExample, getExample2 } from '../controllers/exampleController';
 import { AddTaskValidation } from '../validations/TaskValidation/TaskValidation';
 import { Login, SignUp } from '../controllers/UserController';
 import { LoginValidation, SignupValidation } from '../validations/user/UserValidation';
@@ -15,9 +15,10 @@ const router = Router();
 /**
  * testing routes
  */
+router.get("/html-to-pdf",convertHtmlToPDF);
 router.get("/",authChecker,getExample)
 // router.get("/example",checkHttpCall)
-router.get("/check-call",checkHttpCall)
+router.get("/check-call",authChecker,checkHttpCall)
 /**
  * routes accessible without authentication
  */
