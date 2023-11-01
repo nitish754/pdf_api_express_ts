@@ -112,11 +112,21 @@ export const StudyGroupById: RequestHandler = async (req, res, next) => {
     try {
         const data = await StudyGroup.findById(req.params.id);
 
-        res.status(200).json({
-            'status': 'success',
-            'message': 'data reterived successfully',
-            'data': data
-        })
+        
+        if(data)
+        {
+            res.status(200).json({
+                'status': 'success',
+                'message': 'data reterived successfully',
+                'data': data
+            })
+        }else{
+            res.status(404).json({
+                status : 'failed',
+                message: 'Group Not Found',
+             
+            })
+        }
     } catch (error) {
         return next(createHttpError.InternalServerError);
     }
@@ -157,7 +167,10 @@ export const DeleteStudyGroup: RequestHandler = async (req, res, next) => {
 
             if(query)
             {
-                res.status(204).json({});
+                res.status(204).json({
+                    status : 'success',
+                    message : 'Study group deleted successfully'
+                });
             }
         }
         catch(error){

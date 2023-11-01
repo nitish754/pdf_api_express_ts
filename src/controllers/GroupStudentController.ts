@@ -1,6 +1,9 @@
 import { RequestHandler } from "express";
 import createHttpError from "http-errors";
 import GroupStudent from "../model/GroupStudent";
+import { ObjectId } from "mongodb";
+
+
 
 export const AddStudentToGroup: RequestHandler = async (req, res, next) => {
     try {
@@ -12,31 +15,30 @@ export const AddStudentToGroup: RequestHandler = async (req, res, next) => {
         payload.study_group_id = req.params.id;
 
         // create student id 
-        const group  = await GroupStudent.findOne({}).sort({_id : -1});
-     
+        const group = await GroupStudent.findOne({}).sort({ _id: -1 });
+
         let student_id = '';
         if (group) {
-            
+
             student_id = group?.student_id;
 
             //    res.json(group_id);
-            
+
             const match = student_id?.match(/00(\d+)/);
             // res.json(match);
 
             if (match && match[1]) {
-                let temp_id = parseInt(match[1])+1;
+                let temp_id = parseInt(match[1]) + 1;
 
                 // res.json(temp_id);
-           
-                if(temp_id <= 9)
-                {
+
+                if (temp_id <= 9) {
                     student_id = 'NS000' + temp_id.toString();
-                }else{
+                } else {
                     student_id = 'NS00' + temp_id.toString();
                 }
-                
-                
+
+
             }
             // student_id = 'NS0001'
         } else {
@@ -63,44 +65,16 @@ export const AddStudentToGroup: RequestHandler = async (req, res, next) => {
 
 export const FetchGroupStudent: RequestHandler = async (req, res, next) => {
     try {
+        // res.json(req.params);
+        const students = await GroupStudent.find({ study_group_id: req.params.id })
+            .populate('host_family_id', '_id personal_info.full_name')
+            .sort({ _id: -1 });
 
-        const students = await GroupStudent.aggregate([
-            {
-                $match: { study_group_id: req.params.id }
-            },
-            {
-                $lookup: {
-                    from: 'studygroups',
-                    localField: 'study_group_id',
-                    foreignField: '_id',
-                    as: 'studygroups'
-                }
-            },
-            {
-                $project: {
-                    student_id: 1,
-                    first_name: 1,
-                    last_name: 1,
-                    nationality: 1,
-                    gender: 1,
-                    type: 1,
-                    special_needs: 1,
-                    allergy: 1,
-                    document_number: 1,
-                    date_of_expiry: 1,
-                    country_of_issue: 1,
-                    allergy_to: 1,
-                    email: 1,
-                    contact_number: 1,
-                    study_group_id: 1
-                }
-            }
-        ]);
 
         res.json({
-            status : 'success',
-            message : 'Student fetch successfully',
-            data : students
+            status: 'success',
+            message: 'Student fetch successfully',
+            data: students
         })
     }
     catch (error) {
@@ -109,24 +83,68 @@ export const FetchGroupStudent: RequestHandler = async (req, res, next) => {
 }
 
 export const GroupStudentById: RequestHandler = async (req, res, next) => {
-        try {
-            const student = await GroupStudent.findById(req.params.id);
+    try {
+        const student = await GroupStudent.findById(req.params.id).populate('host_family_id','_id personal_info.full_name');
 
+        if(student)
+        {
             res.json({
-                status : 'success',
-                message : 'Student fetch successfully',
-                data : student
+                status: 'success',
+                message: 'Student fetch successfully',
+                data: student
             });
-        } catch (error) {
-            return next(createHttpError(createHttpError.InternalServerError));
+        }else{
+            res.status(404).json({
+                status : 'failed',
+                message: 'Student Not Found',
+             
+            })
         }
+        
+    } catch (error) {
+        return next(createHttpError(createHttpError.InternalServerError));
+    }
 }
 
 export const UpdateGroupStudent: RequestHandler = async (req, res, next) => {
+    try {
+        await GroupStudent.findByIdAndUpdate(req.params.id, req.body);
 
+        res.status(204).json({
+            status: 'success',
+            message: 'Student fetch successfully',
+        })
+    } catch (error) {
+        return next(createHttpError.InternalServerError);
+    }
 }
 
 export const DeleteGroupStudent: RequestHandler = async (req, res, next) => {
+    try {
+        await GroupStudent.findByIdAndDelete(req.params.id);
 
+        res.status(204).json({
+            status: 'success',
+            message: 'Student deleted successfully'
+        });
+    } catch (error) {
+        return next(createHttpError.InternalServerError);
+    }
+}
+
+export const AssignHostFamily: RequestHandler = async (req, res, next) => {
+    try {
+        const assignFamily = await GroupStudent.findByIdAndUpdate(req.params.id, {
+            host_family_id: req.body.host_family_id
+        })
+        if (assignFamily) {
+            res.status(204).json({
+                status: 'success',
+                message: 'Host Family Assigned successfully'
+            })
+        }
+    } catch (error) {
+        return next(createHttpError.InternalServerError);
+    }
 }
 

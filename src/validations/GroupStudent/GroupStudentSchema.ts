@@ -30,8 +30,11 @@ export const GroupStudentSchema = {
         document_number: Joi.string().label('Document Number'),
         date_of_expiry: Joi.date().iso().label('Date of Expiry'),
         country_of_issue: Joi.string().label('Country of Issue'),
-        allergy_to: Joi.array().items(Joi.string()).label('Allergies'),
+        allergy_to: Joi.string().label('Allergies'),
         email: Joi.string().email().label('Email'),
         contact_number: Joi.string().label('Contact Number')
+    }),
+    AssignHostFamily : Joi.object().keys({
+        host_family_id : Joi.string().required().label('Host Family Id')
     })
 }

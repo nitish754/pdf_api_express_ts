@@ -9,3 +9,7 @@ export const AddGroupStudentPayload : RequestHandler = (req,res,next) =>{
 export const UpdateGroupStudentPayload : RequestHandler = (req,res,next)=>{
     validator(GroupStudentSchema.updateGroupStudent,req.body,next)
 }
+
+export const AssignHostFamilyPayload : RequestHandler = (req,res,next) => {
+    validator(GroupStudentSchema.AssignHostFamily,req.body,next);
+}

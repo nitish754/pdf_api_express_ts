@@ -7,9 +7,9 @@ import { authChecker } from '../middleware/authChecker';
 import { AddHostFamilyValidation, UpdateHostFamilyValidation } from '../validations/HostFamily/HostFamilyValidation';
 import { AddHostFamily, DeleteHostFamily, GeneratePdf, HostFamilyList, UpdateFamily, findFamilyById } from '../controllers/HostFamilyController';
 import { AddStudyGroupValidation, UpdateStudyGroupValidation } from '../validations/StudyGroup/StudyGroupValidation';
-import { AddStudentToGroup, FetchGroupStudent, GroupStudentById,UpdateGroupStudent } from '../controllers/GroupStudentController';
+import { AddStudentToGroup, AssignHostFamily, DeleteGroupStudent, FetchGroupStudent, GroupStudentById,UpdateGroupStudent } from '../controllers/GroupStudentController';
 import { AddStudyGroup, DeleteStudyGroup, StudyGroupById, StudyGroupList, UpdateStudyGroup } from '../controllers/StudyGroupController';
-import { AddGroupStudentPayload, UpdateGroupStudentPayload } from '../validations/GroupStudent/GroupStudentValidation';
+import { AddGroupStudentPayload, AssignHostFamilyPayload, UpdateGroupStudentPayload } from '../validations/GroupStudent/GroupStudentValidation';
 
 const router = Router();
 /**
@@ -47,7 +47,8 @@ router.delete('/study-group/:id/destroy',authChecker,DeleteStudyGroup)
 router.get('/study-group/:id/students',authChecker,FetchGroupStudent)
 router.post('/study-group/:id/student',authChecker,AddGroupStudentPayload,AddStudentToGroup)
 router.get('/study-group/student/:id/details',authChecker,GroupStudentById)
-router.put('/study-group/:id/student/:id/update',authChecker,UpdateGroupStudentPayload,UpdateGroupStudent)
-
+router.put('/study-group/student/:id/update',authChecker,UpdateGroupStudentPayload,UpdateGroupStudent)
+router.delete('/study-group/student/:id/delete',authChecker,DeleteGroupStudent)
+router.put('/study-group/student/:id/assign-host-family',authChecker,AssignHostFamilyPayload,AssignHostFamily);
 
 export default router;

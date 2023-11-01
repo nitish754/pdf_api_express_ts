@@ -45,6 +45,7 @@ const GroupStudentSchema:Schema = new Schema({
     },
     host_family_id : {
         type : Schema.Types.ObjectId,
+        ref : 'HostFamily',
         default : null
     }
 })

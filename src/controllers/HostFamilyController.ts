@@ -84,10 +84,22 @@ export const findFamilyById: RequestHandler = async (req, res, next) => {
     try {
         const hostFamily = await HostFamily.findById(req.params.id);
 
-        res.status(200).json({
-            message: 'Data reterived successfully',
-            data: hostFamily
-        })
+        if(hostFamily)
+        {
+            res.status(200).json({
+                status : 'success',
+                message: 'Data reterived successfully',
+                data: hostFamily
+            })
+        }else{
+            res.status(404).json({
+                status : 'failed',
+                message: 'Family Not Found',
+             
+            })
+        }
+
+        
     } catch (error) {
         return next(createHttpError.InternalServerError);
     }
@@ -103,7 +115,7 @@ export const UpdateFamily: RequestHandler = async (req, res, next) => {
 
         const UpdateFamily = await HostFamily.findByIdAndUpdate(req.params.id, req.body);
 
-        res.status(200).json({
+        res.status(204).json({
             message: 'Family updated successfully',
         })
     } catch (error) {
@@ -117,13 +129,11 @@ export const DeleteHostFamily: RequestHandler = async (req, res, next) => {
         const deleteFamily = await HostFamily.findByIdAndDelete(req.params.id);
 
         if (deleteFamily) {
-            res.status(200).json({
+            res.status(204).json({
                 message: 'Family deleted successfully'
             });
         }
-        res.status(400).json({
-            message: 'There is something went wrong'
-        })
+      
     }
     catch (error) {
         return next(createHttpError.InternalServerError)
