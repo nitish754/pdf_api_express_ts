@@ -10,6 +10,8 @@ import { AddStudyGroupValidation, UpdateStudyGroupValidation } from '../validati
 import { AddStudentToGroup, AssignHostFamily, DeleteGroupStudent, FetchGroupStudent, GroupStudentById,UpdateGroupStudent } from '../controllers/GroupStudentController';
 import { AddStudyGroup, DeleteStudyGroup, StudyGroupById, StudyGroupList, UpdateStudyGroup } from '../controllers/StudyGroupController';
 import { AddGroupStudentPayload, AssignHostFamilyPayload, UpdateGroupStudentPayload } from '../validations/GroupStudent/GroupStudentValidation';
+import { AddBranch, DeleteBranch, FetchBranch, GetBranchById, UpdateBranch } from '../controllers/BranchController';
+import { AddBranchPayload, UpdateBranchPayload } from '../validations/Branch/BranchValidation';
 
 const router = Router();
 /**
@@ -50,5 +52,11 @@ router.get('/study-group/student/:id/details',authChecker,GroupStudentById)
 router.put('/study-group/student/:id/update',authChecker,UpdateGroupStudentPayload,UpdateGroupStudent)
 router.delete('/study-group/student/:id/delete',authChecker,DeleteGroupStudent)
 router.put('/study-group/student/:id/assign-host-family',authChecker,AssignHostFamilyPayload,AssignHostFamily);
+// branches 
+router.post('/branch',authChecker,AddBranchPayload, AddBranch);
+router.get('/branches',authChecker,FetchBranch);
+router.get('/branch/:id',authChecker,GetBranchById)
+router.put('branch/:id/update',authChecker,UpdateBranchPayload,UpdateBranch)
+router.delete('/branch/:id/delete',authChecker,DeleteBranch)
 
 export default router;

@@ -43,3 +43,4 @@ mongoose.connect(DB)
 .catch(() => {
     throw createHttpError(501,"Unable to connect to database")
 })
+

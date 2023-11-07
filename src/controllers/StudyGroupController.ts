@@ -28,6 +28,12 @@ export const StudyGroupList: RequestHandler = async (req, res, next) => {
                     program_name: 1,
                     arrival_date: 1,
                     departure_date: 1,
+                    tour_guide_contact:1,
+                    teacher_contact_number:1,
+                    tour_guide_email: 1,
+                    teacher_email:1,
+                    school_visiting:1,
+                    tour_guide:1,
                     totalStudents: { $size: '$students' }
                 }
             },

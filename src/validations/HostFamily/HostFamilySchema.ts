@@ -7,7 +7,7 @@ export const HostFamilySchema = Joi.object().keys({
         bed_type: Joi.string(),
         no_of_bathroom: Joi.string(),
         no_of_bedroom: Joi.string().required(),
-        no_of_student: Joi.string(),
+        // no_of_student: Joi.string(),
         no_of_bedroom_for_student: Joi.string(),
         total_no_of_bed: Joi.string(),
         interests: Joi.string(),
