@@ -12,7 +12,12 @@ export const HostFamilyList: RequestHandler = async (req, res, next) => {
             filterField = { 'personal_info.city': city }
         }
         if (search) {
-            filterField = { 'personal_info.name': search, 'personal_info.email': search, 'personal_info.contact': search }
+            filterField = {$or:[{'personal_info.full_name':new RegExp(`${search}`,'i')},{'personal_info.email':new RegExp(`${search}`,'i')},{'personal_info.contact':new RegExp(`${search}`,'i')}]};
+           
+        }
+        if(city && search)
+        {
+            filterField = {$and:[{'personal_info.city': city},{$or:[{'personal_info.full_name':new RegExp(`${search}`,'i')},{'personal_info.email':new RegExp(`${search}`,'i')},{'personal_info.contact':new RegExp(`${search}`,'i')}]}]};
         }
 
         let hostFamily = await HostFamily.find(filterField).sort({ _id: -1 });

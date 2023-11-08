@@ -5,11 +5,13 @@ import Branch from "../model/Branch";
 
 export const FetchBranch: RequestHandler = async (req, res, next) => {
     try {
-        let filter = {};
+        let filter ={};
         let search = req.query.search;
-        if (search) {
-            filter = { 'branch_name': search, 'city': search, 'postal_code': search, 'contact_numer': search, 'email': search }
+        if(search)
+        {
+            filter = {$or:[{ 'branch_name': new RegExp( `${search}`,'i')},{ 'postal_code': new RegExp( `${search}`,'i')},{ 'contact_numer': new RegExp( `${search}`,'i')},{ 'email': new RegExp( `${search}`,'i')},{ 'city': new RegExp( `${search}`,'i')}]};
         }
+
         const branches = await Branch.find(filter).sort({ _id: -1 });
 
         res.status(200).json({
