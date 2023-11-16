@@ -2,6 +2,7 @@ import { Schema,Document,model, ObjectId } from "mongoose";
 
 export interface IGroupStudent extends Document{
     student_id : string,
+    profile_type: string,
     first_name : string,
     last_name :string,
     nationality : string,
@@ -22,6 +23,7 @@ export interface IGroupStudent extends Document{
 
 const GroupStudentSchema:Schema = new Schema({
     student_id: String,
+    profile_type:String,
     first_name: String,
     last_name: String,
     nationality: String,

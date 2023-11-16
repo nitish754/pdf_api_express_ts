@@ -1,7 +1,7 @@
 import {Router} from 'express'
 import { addTask, checkHttpCall, convertHtmlToPDF, getExample, getExample2 } from '../controllers/exampleController';
 import { AddTaskValidation } from '../validations/TaskValidation/TaskValidation';
-import { Login, SignUp } from '../controllers/UserController';
+import { Login, SignUp, UpdateUser } from '../controllers/UserController';
 import { LoginValidation, SignupValidation } from '../validations/user/UserValidation';
 import { authChecker } from '../middleware/authChecker';
 import { AddHostFamilyValidation, UpdateHostFamilyValidation } from '../validations/HostFamily/HostFamilyValidation';
@@ -12,12 +12,16 @@ import { AddStudyGroup, DeleteStudyGroup, StudyGroupById, StudyGroupList, Update
 import { AddGroupStudentPayload, AssignHostFamilyPayload, UpdateGroupStudentPayload } from '../validations/GroupStudent/GroupStudentValidation';
 import { AddBranch, DeleteBranch, FetchBranch, GetBranchById, UpdateBranch } from '../controllers/BranchController';
 import { AddBranchPayload, UpdateBranchPayload } from '../validations/Branch/BranchValidation';
+import { AddEmployeePayload, UpdateEmployeePayload } from '../validations/Employee/EmployeeValidation';
+import { AddEmployee, DeleteEmployee, FetchEmployee, FetchEmployeeById, UpdateEmployee } from '../controllers/EmployeeController';
+import { StudyGroupCertificatePDF, print, viewHTML } from '../controllers/PDFController';
 
 const router = Router();
 /**
  * testing routes
  */
-router.get("/html-to-pdf",convertHtmlToPDF);
+router.get('/view-html',viewHTML);
+router.get("/html-to-pdf",print);
 router.get("/",authChecker,getExample)
 // router.get("/example",checkHttpCall)
 router.get("/check-call",authChecker,checkHttpCall)
@@ -30,6 +34,8 @@ router.post('/auth/login',LoginValidation,Login)
  * routes accessible with authenticationn
  */
 router.post('/add-task',authChecker,AddTaskValidation,addTask)
+
+router.put('/user/update',authChecker,UpdateUser);
 
 router.post('/add-host-family',authChecker,AddHostFamilyValidation,AddHostFamily)
 router.get('/host-family',authChecker,HostFamilyList);
@@ -58,5 +64,15 @@ router.get('/branches',authChecker,FetchBranch);
 router.get('/branch/:id',authChecker,GetBranchById)
 router.put('branch/:id/update',authChecker,UpdateBranchPayload,UpdateBranch)
 router.delete('/branch/:id/delete',authChecker,DeleteBranch)
+
+// employee
+router.post('/employee',authChecker,AddEmployeePayload, AddEmployee);
+router.get('/employees',authChecker,FetchEmployee);
+router.get('/employee/:id',authChecker,FetchEmployeeById)
+router.put('employee/:id/update',authChecker,UpdateEmployeePayload,UpdateEmployee)
+router.delete('/employee/:id/delete',authChecker,DeleteEmployee)
+
+// pdf routes 
+router.get('/study-group/:group_id/certificate',authChecker,StudyGroupCertificatePDF);
 
 export default router;

@@ -2,6 +2,7 @@ import Joi from "joi";
 
 export const GroupStudentSchema = {
     addGroupStudent: Joi.object().keys({
+        profile_type : Joi.string().required().label('Profile Type'),
         first_name: Joi.string().required().label('First Name'),
         last_name: Joi.string().required().label('Last Name'),
         gender: Joi.string().required().label('Gender'),
@@ -19,6 +20,7 @@ export const GroupStudentSchema = {
         // study_group_id: Joi.string().required().label('Group id')
     }),
     updateGroupStudent: Joi.object().keys({
+        profile_type : Joi.string().required().label('Profile Type'),
         first_name: Joi.string().required().label('First Name'),
         last_name: Joi.string().required().label('Last Name'),
         gender: Joi.string().required().label('Gender'),

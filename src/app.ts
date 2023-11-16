@@ -8,6 +8,7 @@ import passport from 'passport'
 import Mpassport from './middleware/passport'
 import cookieParser from "cookie-parser";
 import cors from 'cors'
+import  hbs  from 'hbs'
 
 const app = express()
 
@@ -20,6 +21,9 @@ app.get("/", (req,res,next) => {
     })
 })
 app.use(express.json())
+app.use(express.static('public'))
+app.set('view engine', 'hbs');
+app.set('views',__dirname+'/views')
 app.use(passport.initialize())
 Mpassport(passport);
 app.use(cookieParser())

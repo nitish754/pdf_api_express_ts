@@ -65,8 +65,15 @@ export const AddStudentToGroup: RequestHandler = async (req, res, next) => {
 
 export const FetchGroupStudent: RequestHandler = async (req, res, next) => {
     try {
-        // res.json(req.params);
-        const students = await GroupStudent.find({ study_group_id: req.params.id })
+        let filter = {};
+        let search = req.query.search
+        if(search)
+        {
+            filter = {$and:[{study_group_id: req.params.id },{$or:[{first_name : new RegExp(`${search}`,'i')},{last_name : new RegExp(`${search}`,'i')},{email : new RegExp(`${search}`,'i')}]}]}
+        }else{
+            filter = {study_group_id: req.params.id };
+        }
+        const students = await GroupStudent.find(filter)
             .populate('host_family_id', '_id personal_info.full_name')
             .sort({ _id: -1 });
 

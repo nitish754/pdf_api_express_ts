@@ -5,7 +5,7 @@ declare interface ITaskData {
 }
 
 declare interface IUserData {
-    name : string,
+    first_name : string,
     email : string,
     password :string,
     confirm_password : string
@@ -46,3 +46,5 @@ declare interface IHostFamilyData{
     specification : ISpecificationData,
     bank_details : IBankDetailsData
 }
+
+declare module 'puppeteer-html-pdf';

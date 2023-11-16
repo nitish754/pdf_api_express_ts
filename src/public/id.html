@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Html2Pdf</title>
+    <style type="text/css" media="all">
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700;900&display=swap");
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            vertical-align: middle;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        html,
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            color: #000000;
+            font-size: 1em;
+            line-height: 1.2;
+            height: 100%;
+            font-weight: 400;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 350px 350px;
+            row-gap: 20px;
+            column-gap: 20px;
+            margin: auto;
+            justify-content: center;
+        }
+
+        .grid-item {
+            position: relative;
+            background-color: #f4f4f4;
+        }
+
+        .footer {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .flex {
+            display: flex;
+            align-items: center;
+            gap: 1em;
+        }
+
+        .header {
+            text-align: right;
+            padding: 1em;
+            background-image: url(image/background-1.png);
+            background-size: cover;
+            background-position: center;
+        }
+
+        .header img {
+            max-width: 4em;
+        }
+
+        .content {
+            padding: 1em 0.625em;
+            padding-top: 0;
+            background-image: url(image/background-2.png);
+            background-size: cover;
+            background-position: center;
+            padding-bottom: 2em;
+        }
+
+        .user-details {
+            font-size: 0.625em;
+            display: flex;
+            align-items: center;
+            margin-bottom: 2em;
+        }
+
+        .user-details .avatar {
+            border-radius: 50%;
+            width: 6.5em;
+            height: 6.5em;
+            border: 0.2em solid #fff;
+            background-color: #eaeaea;
+            margin-top: -3.25em;
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: translateY(0.4em);
+            overflow: hidden;
+        }
+
+        .user-details .avatar img {
+            width: 6em;
+            height: 6em;
+            object-fit: cover;
+        }
+
+        .user-details .username {
+            font-weight: bold;
+            background-color: #8d0707;
+            color: #fff;
+            display: inline-block;
+            padding: 0.5em 1.5em;
+            border-bottom-right-radius: 14px;
+            position: relative;
+            margin-left: -1.2em;
+            margin-top: -2px;
+        }
+
+        .user-details .username::before {
+            content: "";
+            position: absolute;
+            border-top: 26px solid #8d0707;
+            border-right: 40px solid transparent;
+            right: -35px;
+            top: 0;
+        }
+
+
+        .user-details .username span {
+            font-size: 0.75em;
+            display: block;
+            font-weight: 400;
+        }
+
+        .content {
+            background-color: #dadada;
+        }
+
+        .contact-grid {
+            font-size: 0.5em;
+            display: grid;
+            grid-template-columns: auto auto auto;
+            gap: 1rem;
+        }
+
+        .contact-grid .label {
+            font-weight: 500;
+            margin-bottom: 0.2em;
+            color: #b83336;
+        }
+
+        .contact-grid .value {
+            font-weight: 700;
+            color: #000000;
+        }
+
+        .footer {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .footer .address {
+            background-color: #b83336;
+            color: #fff;
+            padding-top: 0.5em;
+            padding-left: 2em;
+            padding-right: 1em;
+            padding-bottom: 0.5em;
+            border-top-left-radius: 14px;
+            position: relative;
+            display: flex;
+            text-align: right;
+            font-size: 0.45em;
+        }
+
+        .footer .address::before {
+            content: "";
+            position: absolute;
+            border-bottom: 23px solid #b83336;
+            border-left: 40px solid transparent;
+            left: -32px;
+            bottom: 0;
+        }
+
+        .footer .address svg {
+            width: 14px;
+            height: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="grid">
+        <div class="grid-item">
+            <div class="header">
+                <img src="image/log.png" alt="">
+            </div>
+            <div class="content">
+                <div class="user-details">
+                    <div class="avatar">
+                        <img src="https://cdn-icons-png.flaticon.com/512/666/666201.png" alt="">
+                    </div>
+                    <div class="username">
+                        RODRIGO DEL CASTILLO LOPEZ
+                        <span>Student</span>
+                    </div>
+                </div>
+                <div class="contact-grid">
+                    <div class="item">
+                        <div class="label">Nationality</div>
+                        <div class="value">Spanish</div>
+                    </div>
+                    <div class="item">
+                        <div class="label">Host Family</div>
+                        <div class="value">Adele Stephens</div>
+                    </div>
+                    <div class="item">
+                        <div class="label">Host Family Address</div>
+                        <div class="value">10 Heather Avenue - PE1 3XJ</div>
+                    </div>
+                    <div class="item">
+                        <div class="label">Host Family Contact No.</div>
+                        <div class="value">077 5901 0213</div>
+                    </div>
+                    <div class="item">
+                        <div class="label">Taxi Phone Number</div>
+                        <div class="value">077 3333 444 555</div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <div class="address">
+                    <div class="flex">
+                        <span>Northumbria University, Ellison Pl<br>
+                            Newcastle upon Tyne NE1 8ST</span>
+                        <span class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 32 32">
+                                <path fill="currentColor"
+                                    d="M16 2A11.013 11.013 0 0 0 5 13a10.889 10.889 0 0 0 2.216 6.6s.3.395.349.452L16 30l8.439-9.953c.044-.053.345-.447.345-.447l.001-.003A10.885 10.885 0 0 0 27 13A11.013 11.013 0 0 0 16 2Zm0 15a4 4 0 1 1 4-4a4.005 4.005 0 0 1-4 4Z" />
+                                <circle cx="16" cy="13" r="4" fill="none" /></svg>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-item">
+            <div class="header">
+                <img src="image/log.png" alt="">
+            </div>
+            <div class="content">
+                <div class="user-details">
+                    <div class="avatar">
+                        <img src="https://cdn-icons-png.flaticon.com/512/666/666201.png" alt="">
+                    </div>
+                    <div class="username">
+                        RODRIGO DEL CASTILLO LOPEZ
+                        <span>Student</span>
+                    </div>
+                </div>
+                <div class="contact-grid">
+                    <div class="item">
+                        <div class="label">Nationality</div>
+                        <div class="value">Spanish</div>
+                    </div>
+                    <div class="item">
+                        <div class="label">Host Family</div>
+                        <div class="value">Adele Stephens</div>
+                    </div>
+                    <div class="item">
+                        <div class="label">Host Family Address</div>
+                        <div class="value">10 Heather Avenue - PE1 3XJ</div>
+                    </div>
+                    <div class="item">
+                        <div class="label">Host Family Contact No.</div>
+                        <div class="value">077 5901 0213</div>
+                    </div>
+                    <div class="item">
+                        <div class="label">Taxi Phone Number</div>
+                        <div class="value">077 3333 444 555</div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <div class="address">
+                    <div class="flex">
+                        <span>Northumbria University, Ellison Pl<br>
+                            Newcastle upon Tyne NE1 8ST</span>
+                        <span class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 32 32">
+                                <path fill="currentColor"
+                                    d="M16 2A11.013 11.013 0 0 0 5 13a10.889 10.889 0 0 0 2.216 6.6s.3.395.349.452L16 30l8.439-9.953c.044-.053.345-.447.345-.447l.001-.003A10.885 10.885 0 0 0 27 13A11.013 11.013 0 0 0 16 2Zm0 15a4 4 0 1 1 4-4a4.005 4.005 0 0 1-4 4Z" />
+                                <circle cx="16" cy="13" r="4" fill="none" /></svg>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
