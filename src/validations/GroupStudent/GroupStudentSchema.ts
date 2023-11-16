@@ -15,8 +15,8 @@ export const GroupStudentSchema = {
         date_of_expiry: Joi.date().iso().allow('').label('Date of Expiry'),
         country_of_issue: Joi.string().allow('').label('Country of Issue'),
         allergy_to: Joi.string().allow('').label('Allergies'),
-        email: Joi.string().email().required().label('Email'),
-        contact_number: Joi.string().required().label('Contact Number')
+        email: Joi.string().email().allow('').label('Email'),
+        contact_number: Joi.string().allow('').label('Contact Number')
     }),
     updateGroupStudent: Joi.object().keys({
         profile_type: Joi.string().required().label('Profile Type'),
@@ -32,8 +32,8 @@ export const GroupStudentSchema = {
         date_of_expiry: Joi.date().iso().allow('').label('Date of Expiry'),
         country_of_issue: Joi.string().allow('').label('Country of Issue'),
         allergy_to: Joi.string().allow('').label('Allergies'),
-        email: Joi.string().email().required().label('Email'),
-        contact_number: Joi.string().required().label('Contact Number')
+        email: Joi.string().email().allow('').label('Email'),
+        contact_number: Joi.string().allow('').label('Contact Number')
     }),
     AssignHostFamily: Joi.object().keys({
         host_family_id: Joi.string().required().label('Host Family Id')

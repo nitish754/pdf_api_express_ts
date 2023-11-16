@@ -59,21 +59,22 @@ export const StudyGroupCertificatePDF : RequestHandler = async (req,res,next) =>
         { $match: { _id: new mongoose.Types.ObjectId(group_id) } },
         {
           $lookup: {
+            from: 'hostfamilies',
+            foreignField: 'host_family_id',
+            localField: '_id', // Use the field from the unwound array
+            as: 'GroupStudent.Hostfamily',
+          },
+        },
+        
+        {
+          $unwind: '$GroupStudent.Hostfamily', // Unwind to destructure the array created by $lookup
+        },
+        {
+          $lookup: {
             from: 'groupstudents',
             foreignField: 'study_group_id',
             localField: '_id',
             as: 'GroupStudent',
-          },
-        },
-        {
-          $unwind: '$GroupStudent', // Unwind to destructure the array created by $lookup
-        },
-        {
-          $lookup: {
-            from: 'hostfamilies',
-            foreignField: 'GroupStudent.host_family_id',
-            localField: 'hostfamilies._id', // Use the field from the unwound array
-            as: 'GroupStudent.Hostfamily',
           },
         },
         {
@@ -83,7 +84,7 @@ export const StudyGroupCertificatePDF : RequestHandler = async (req,res,next) =>
             group_name: { $first: '$group_name' },
             arrival_date: { $first: '$arrival_date' },
             departure_date: { $first: '$departure_date' },
-            GroupStudent: { $push: '$GroupStudent' },
+            hostfamilies: { $push: '$GroupStudent' },
           },
         },
       ]);

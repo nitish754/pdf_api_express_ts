@@ -1,12 +1,14 @@
 import { RequestHandler } from "express";
 import createHttpError from "http-errors";
 import GroupStudent from "../model/GroupStudent";
-import { ObjectId } from "mongodb";
+
 
 
 
 export const AddStudentToGroup: RequestHandler = async (req, res, next) => {
     try {
+        // res.json(req.body);
+        // return;
         const validateEmail = await GroupStudent.findOne({ email: req.body.email, study_group_id: req.params.id }).count();
         if (validateEmail > 0) {
             return next(createHttpError(422, "Email is already exist in this group"));
