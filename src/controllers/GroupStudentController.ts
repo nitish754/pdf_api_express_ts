@@ -7,13 +7,13 @@ import GroupStudent from "../model/GroupStudent";
 
 export const AddStudentToGroup: RequestHandler = async (req, res, next) => {
     try {
-        // res.json(req.body);
-        // return;
-        const validateEmail = await GroupStudent.findOne({ email: req.body.email, study_group_id: req.params.id }).count();
-        if (validateEmail > 0) {
-            return next(createHttpError(422, "Email is already exist in this group"));
-        }
         const payload = req.body;
+        if (payload.email) {
+            const validateEmail = await GroupStudent.findOne({ email: req.body.email, study_group_id: req.params.id }).count();
+            if (validateEmail > 0) {
+                return next(createHttpError(422, "Email is already exist in this group"));
+            }
+        }
         payload.study_group_id = req.params.id;
 
         // create student id 
@@ -69,11 +69,10 @@ export const FetchGroupStudent: RequestHandler = async (req, res, next) => {
     try {
         let filter = {};
         let search = req.query.search
-        if(search)
-        {
-            filter = {$and:[{study_group_id: req.params.id },{$or:[{first_name : new RegExp(`${search}`,'i')},{last_name : new RegExp(`${search}`,'i')},{email : new RegExp(`${search}`,'i')}]}]}
-        }else{
-            filter = {study_group_id: req.params.id };
+        if (search) {
+            filter = { $and: [{ study_group_id: req.params.id }, { $or: [{ first_name: new RegExp(`${search}`, 'i') }, { last_name: new RegExp(`${search}`, 'i') }, { email: new RegExp(`${search}`, 'i') }] }] }
+        } else {
+            filter = { study_group_id: req.params.id };
         }
         const students = await GroupStudent.find(filter)
             .populate('host_family_id', '_id personal_info.full_name')
@@ -93,23 +92,22 @@ export const FetchGroupStudent: RequestHandler = async (req, res, next) => {
 
 export const GroupStudentById: RequestHandler = async (req, res, next) => {
     try {
-        const student = await GroupStudent.findById(req.params.id).populate('host_family_id','_id personal_info.full_name');
+        const student = await GroupStudent.findById(req.params.id).populate('host_family_id', '_id personal_info.full_name');
 
-        if(student)
-        {
+        if (student) {
             res.json({
                 status: 'success',
                 message: 'Student fetch successfully',
                 data: student
             });
-        }else{
+        } else {
             res.status(404).json({
-                status : 'failed',
+                status: 'failed',
                 message: 'Student Not Found',
-             
+
             })
         }
-        
+
     } catch (error) {
         return next(createHttpError(createHttpError.InternalServerError));
     }

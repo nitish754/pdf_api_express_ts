@@ -114,8 +114,11 @@ export const UpdateFamily: RequestHandler = async (req, res, next) => {
     try {
         const ValidateEmail = await HostFamily.findOne({ 'personal_info.email': req.body.personal_info.email });
 
-        if (req.params.id !== ValidateEmail?._id.toString()) {
-            return next(createHttpError(422, "Email already exist"));
+        if(ValidateEmail)
+        {
+            if (req.params.id !== ValidateEmail?._id.toString()) {
+                return next(createHttpError(422, "Email already exist"));
+            }
         }
 
         const UpdateFamily = await HostFamily.findByIdAndUpdate(req.params.id, req.body);

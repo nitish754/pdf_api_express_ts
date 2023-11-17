@@ -148,8 +148,11 @@ export const UpdateStudyGroup: RequestHandler = async (req, res, next) => {
         // if (validateGroupId?._id.toString() != req.params.id.toString()){
         //     return next(createHttpError(422, 'Group Id is already taken'))
         // }
-        if (validateGroupName?._id != req.params.id) {
-            return next(createHttpError(422, 'Group Name already taken'))
+        if(validateGroupName)
+        {
+            if (validateGroupName?._id != req.params.id) {
+                return next(createHttpError(422, 'Group Name already taken'))
+            }
         }
 
         // update study group data 

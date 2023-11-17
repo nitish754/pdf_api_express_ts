@@ -30,7 +30,7 @@ export const AddEmployee : RequestHandler = async (req,res,next) =>{
         let payload = req.body;
         payload.created_by = req.user?._id;
         payload.password = bcrypt.hash(payload.password,8)
-        res.json(payload);
+        // res.json(payload);
         const user = await User.findOne({email : payload.email});
         if(user)
         {
