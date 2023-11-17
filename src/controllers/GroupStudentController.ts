@@ -14,7 +14,11 @@ export const AddStudentToGroup: RequestHandler = async (req, res, next) => {
                 return next(createHttpError(422, "Email is already exist in this group"));
             }
         }
-        payload.study_group_id = req.params.id;
+        let group_id = req.params.group_id;
+        if(group_id)
+        {
+            payload.study_group_id = group_id;
+        }
 
         // create student id 
         const group = await GroupStudent.findOne({}).sort({ _id: -1 });
@@ -69,11 +73,24 @@ export const FetchGroupStudent: RequestHandler = async (req, res, next) => {
     try {
         let filter = {};
         let search = req.query.search
-        if (search) {
-            filter = { $and: [{ study_group_id: req.params.id }, { $or: [{ first_name: new RegExp(`${search}`, 'i') }, { last_name: new RegExp(`${search}`, 'i') }, { email: new RegExp(`${search}`, 'i') }] }] }
-        } else {
-            filter = { study_group_id: req.params.id };
+        let group_id =  req.params.group_id;
+        if(group_id)
+        {
+            if (search) {
+                filter = { $and: [{ study_group_id: group_id }, { $or: [{ first_name: new RegExp(`${search}`, 'i') }, { last_name: new RegExp(`${search}`, 'i') }, { email: new RegExp(`${search}`, 'i') }] }] }
+            } else {
+                filter = { study_group_id: group_id };
+            }
         }
+        if(!group_id)
+        {
+            if (search) {
+                filter = { $and: [{ study_group_id: null }, { $or: [{ first_name: new RegExp(`${search}`, 'i') }, { last_name: new RegExp(`${search}`, 'i') }, { email: new RegExp(`${search}`, 'i') }] }] }
+            } else {
+                filter = { study_group_id: null };
+            }
+        }
+        
         const students = await GroupStudent.find(filter)
             .populate('host_family_id', '_id personal_info.full_name')
             .sort({ _id: -1 });
