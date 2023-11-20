@@ -188,16 +188,16 @@
         <table class="info-table">
             <tr>
                 <td rowspan="4" style="width: 50%;">
-                    <img src="{{ pdfPayload.headerInfo.logo }}" alt="logo" style="max-width:200px;">
+                    <img src="{{ headerInfo.logo }}" alt="logo" style="max-width:200px;">
                 </td>
                 <td class="text-end">
                     <div class="flex">
-                        <span>+44 7784 004353</span>
+                        <span>{{ headerInfo.contact }}</span>
                         <span class="icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                 <path fill="currentColor"
                                     d="M12.001 2c5.523 0 10 4.477 10 10s-4.477 10-10 10a9.954 9.954 0 0 1-5.03-1.355L2.005 22l1.352-4.968A9.953 9.953 0 0 1 2.001 12c0-5.523 4.477-10 10-10ZM8.593 7.3l-.2.008a.961.961 0 0 0-.372.1a1.293 1.293 0 0 0-.294.228c-.12.113-.188.211-.261.306A2.73 2.73 0 0 0 6.9 9.62c.002.49.13.967.33 1.413c.409.902 1.082 1.857 1.97 2.742c.214.213.424.427.65.626a9.448 9.448 0 0 0 3.84 2.046l.568.087c.185.01.37-.004.556-.013a1.99 1.99 0 0 0 .833-.231a4.83 4.83 0 0 0 .383-.22s.043-.028.125-.09c.135-.1.218-.171.33-.288c.083-.086.155-.187.21-.302c.078-.163.156-.474.188-.733c.024-.198.017-.306.014-.373c-.004-.107-.093-.218-.19-.265l-.582-.261s-.87-.379-1.402-.621a.497.497 0 0 0-.176-.041a.482.482 0 0 0-.378.127c-.005-.002-.072.055-.795.931a.35.35 0 0 1-.368.13a1.43 1.43 0 0 1-.191-.066c-.124-.052-.167-.072-.252-.108a6.025 6.025 0 0 1-1.575-1.003c-.126-.11-.243-.23-.363-.346a6.297 6.297 0 0 1-1.02-1.268l-.059-.095a.923.923 0 0 1-.102-.205c-.038-.147.061-.265.061-.265s.243-.266.356-.41c.11-.14.203-.276.263-.373c.118-.19.155-.385.093-.536c-.28-.684-.57-1.365-.868-2.041c-.059-.134-.234-.23-.393-.249c-.054-.006-.108-.012-.162-.016a3.385 3.385 0 0 0-.403.004l.201-.008Z" />
-                                </svg>
+                            </svg>
                         </span>
                     </div>
                 </td>
@@ -205,7 +205,7 @@
             <tr>
                 <td class="text-end">
                     <div class="flex">
-                        <span>info@newcastleschooluk.com</span>
+                        <span>{{ headerInfo.email }}</span>
                         <span class="icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                 <g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
@@ -223,12 +223,12 @@
             <tr>
                 <td class="text-end">
                     <div class="flex">
-                        <span>www.newcastleschooluk.com</span>
+                        <span>{{ headerInfo.website }}</span>
                         <span class="icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                 <path fill="currentColor"
                                     d="M16.36 14c.08-.66.14-1.32.14-2c0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2m-5.15 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95a8.03 8.03 0 0 1-4.33 3.56M14.34 14H9.66c-.1-.66-.16-1.32-.16-2c0-.68.06-1.35.16-2h4.68c.09.65.16 1.32.16 2c0 .68-.07 1.34-.16 2M12 19.96c-.83-1.2-1.5-2.53-1.91-3.96h3.82c-.41 1.43-1.08 2.76-1.91 3.96M8 8H5.08A7.923 7.923 0 0 1 9.4 4.44C8.8 5.55 8.35 6.75 8 8m-2.92 8H8c.35 1.25.8 2.45 1.4 3.56A8.008 8.008 0 0 1 5.08 16m-.82-2C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2c0 .68.06 1.34.14 2M12 4.03c.83 1.2 1.5 2.54 1.91 3.97h-3.82c.41-1.43 1.08-2.77 1.91-3.97M18.92 8h-2.95a15.65 15.65 0 0 0-1.38-3.56c1.84.63 3.37 1.9 4.33 3.56M12 2C6.47 2 2 6.5 2 12a10 10 0 0 0 10 10a10 10 0 0 0 10-10A10 10 0 0 0 12 2Z" />
-                                </svg>
+                            </svg>
                         </span>
                     </div>
                 </td>
@@ -236,13 +236,14 @@
             <tr>
                 <td class="text-end">
                     <div class="flex">
-                        <span>Northumbria University, Ellison Pl<br>
-                            Newcastle upon Tyne NE1 8ST</span>
+                        <span>{{ headerInfo.address1 }}<br>
+                            {{ headerInfo.address2 }}</span>
                         <span class="icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 32 32">
                                 <path fill="currentColor"
                                     d="M16 2A11.013 11.013 0 0 0 5 13a10.889 10.889 0 0 0 2.216 6.6s.3.395.349.452L16 30l8.439-9.953c.044-.053.345-.447.345-.447l.001-.003A10.885 10.885 0 0 0 27 13A11.013 11.013 0 0 0 16 2Zm0 15a4 4 0 1 1 4-4a4.005 4.005 0 0 1-4 4Z" />
-                                <circle cx="16" cy="13" r="4" fill="none" /></svg>
+                                <circle cx="16" cy="13" r="4" fill="none" />
+                            </svg>
                         </span>
                     </div>
                 </td>
@@ -251,66 +252,45 @@
         <h3 class="text-center" style="color: #707070; margin-bottom: 20px;">Newcastle Language School<br> Student
             Accommodation Booking Report</h3>
         <div class="flex" style="justify-content: space-between; width: 100%; margin-bottom: 20px;">
-            <div><b>Group Name:</b> <b>COLEGIO LITERATOR</b></div>
-            <div><b>Arrival:</b> 30/11/2023</div>
-            <div><b>Departure:</b> 7/12/2023</div>
+            <div><b>Group Name:</b> <b>{{ groupInfo.group_name }}</b></div>
+            <div><b>Arrival:</b> {{  groupInfo.arrival }}</div>
+            <div><b>Departure:</b> {{ groupInfo.departure }}</div>
         </div>
         <table>
             <tbody>
+                {{#each hostfamilyInfo }}
                 <tr>
                     <th class="text-start bg-red text-white t-head">HOST FAMILY</th>
                     <th class="text-start bg-red text-white t-head" colspan="2">ADDRESS</th>
                     <th class="text-start bg-red text-white t-head">CONTACT NUMBER</th>
                 </tr>
                 <tr>
-                    <th class="text-start bg-blue text-white t-head2">ALANA STEWARD</th>
-                    <th class="text-start bg-blue text-white t-head2" colspan="2">9 Woodfield, Peterborough PE9 3PY</th>
-                    <th class="text-start bg-blue text-white t-head2">07395353349</th>
+                    <th class="text-start bg-blue text-white t-head2">{{ family_info.name }}</th>
+                    <th class="text-start bg-blue text-white t-head2" colspan="2">{{ family_info.address
+                        }}</th>
+                    <th class="text-start bg-blue text-white t-head2">{{ family_info.contact }}</th>
                 </tr>
+
                 <tr>
                     <th class="text-start t-cell heading">Name</th>
                     <th class="text-start t-cell heading">Gender</th>
                     <th class="t-cell heading">Allergy</th>
                     <th class="t-cell heading">Special Needs</th>
                 </tr>
+                {{#each students }}
                 <tr>
-                    <th class="text-start t-cell">DANNA AINHOA ZURITA ZAPATA <br><span>(Student)</span></th>
-                    <td class="t-cell">Female</td>
-                    <td class="text-center t-cell">-</td>
-                    <td class="text-center t-cell">-</td>
+                    <th class="text-start t-cell">{{ first_name }} {{ last_name }} <br><span>({{ profile_type }})</span></th>
+                    <td class="t-cell">{{ gender }}</td>
+                    <td class="text-center t-cell">{{ allergy }}</td>
+                    <td class="text-center t-cell">{{ special_needs }}</td>
                 </tr>
-                <tr class="last-cell">
-                    <th class="text-start t-cell">JOLIETTE JIMÉNEZ CASTILLO <br><span>(Student)</span></th>
-                    <td class="t-cell">Female</td>
-                    <td class="text-center t-cell">-</td>
-                    <td class="text-center t-cell">-</td>
-                </tr>
+                {{/each }}
+
                 <tr>
                     <td colspan="4" class="td-blank">&nbsp;</td>
                 </tr>
-                <tr>
-                    <th class="text-start bg-blue text-white t-head2">ALANA STEWARD</th>
-                    <th class="text-start bg-blue text-white t-head2" colspan="2">9 Woodfield, Peterborough PE9 3PY</th>
-                    <th class="text-start bg-blue text-white t-head2">07395353349<br>07395353349</th>
-                </tr>
-                <tr>
-                    <th class="text-start t-cell heading">Name</th>
-                    <th class="text-start t-cell heading">Gender</th>
-                    <th class="t-cell heading">Allergy</th>
-                    <th class="t-cell heading">Special Needs</th>
-                </tr>
-                <tr>
-                    <th class="text-start t-cell">DANNA AINHOA ZURITA ZAPATA <br><span>(Student)</span></th>
-                    <td class="t-cell">Female</td>
-                    <td class="text-center t-cell">-</td>
-                    <td class="text-center t-cell">-</td>
-                </tr>
-                <tr class="last-cell">
-                    <th class="text-start t-cell">JOLIETTE JIMÉNEZ CASTILLO <br><span>(Student)</span></th>
-                    <td class="t-cell">Female</td>
-                    <td class="text-center t-cell">-</td>
-                    <td class="text-center t-cell">-</td>
-                </tr>
+
+                {{/each }}
             </tbody>
         </table>
     </div>
@@ -319,7 +299,7 @@
     <div class="qr-code">
         <img src="https://recipeapp.nyc3.cdn.digitaloceanspaces.com/images/QR.jpg" alt="" class="img">
     </div>
-   
+
 
 </body>
 

@@ -1,34 +1,37 @@
-import { Schema,Document,model, ObjectId } from "mongoose";
+import { Schema, Document, model, ObjectId } from "mongoose";
 
-export interface IGroupStudent extends Document{
-    student_id : string,
+export interface IGroupStudent extends Document {
+    student_id: string,
     profile_type: string,
-    first_name : string,
-    last_name :string,
-    nationality : string,
-    gender : string,
-    dob : Date,
-    special_needs : string,
-    allergy : string,
-    document_type : string,
-    document_number : string,
-    date_of_expiry : Date,
-    country_of_issue : string,
-    allergy_to :string,
-    email : string,
-    contact_number : string,
-    study_group_id:ObjectId,
-    host_family_id : ObjectId
+    first_name: string,
+    last_name: string,
+    nationality: string,
+    gender: string,
+    dob: Date,
+    special_needs: string,
+    allergy: string,
+    document_type: string,
+    document_number: string,
+    date_of_expiry: Date,
+    country_of_issue: string,
+    allergy_to: string,
+    email: string,
+    contact_number: string,
+    study_group_id: ObjectId,
+    host_family_id: ObjectId
 }
 
-const GroupStudentSchema:Schema = new Schema({
+const GroupStudentSchema: Schema = new Schema({
     student_id: String,
-    profile_type:String,
+    profile_type: String,
     first_name: String,
     last_name: String,
     nationality: String,
     gender: String,
-    dob : Date,
+    dob: {
+        type: Date,
+        default: null
+    },
     document_type: String,
     special_needs: String,
     allergy: String,
@@ -38,18 +41,20 @@ const GroupStudentSchema:Schema = new Schema({
     allergy_to: String,
     email: {
         type: String,
-        default : null
+        default: null
     },
     contact_number: String,
     study_group_id: {
         type: Schema.Types.ObjectId,
-        default : null
+        default: null
     },
-    host_family_id : {
-        type : Schema.Types.ObjectId,
-        ref : 'HostFamily',
-        default : null
+    host_family_id: {
+        type: Schema.Types.ObjectId,
+        ref: 'HostFamily',
+        default: null
     }
 })
 
-export default model<IGroupStudent>("GroupStudent",GroupStudentSchema);
+
+
+export default model<IGroupStudent>("GroupStudent", GroupStudentSchema);
