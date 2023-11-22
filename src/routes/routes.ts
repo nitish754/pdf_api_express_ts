@@ -14,7 +14,7 @@ import { AddBranch, DeleteBranch, FetchBranch, GetBranchById, UpdateBranch } fro
 import { AddBranchPayload, UpdateBranchPayload } from '../validations/Branch/BranchValidation';
 import { AddEmployeePayload, UpdateEmployeePayload } from '../validations/Employee/EmployeeValidation';
 import { AddEmployee, DeleteEmployee, FetchEmployee, FetchEmployeeById, UpdateEmployee } from '../controllers/EmployeeController';
-import { StudyGroupCertificatePDF, print, viewHTML } from '../controllers/PDFController';
+import { GenerateIdCard, HostFamilyDetailsPDF, HostFamilyLetter, StudyGroupCertificatePDF, print, viewHTML } from '../controllers/PDFController';
 
 const router = Router();
 /**
@@ -42,7 +42,8 @@ router.get('/host-family',authChecker,HostFamilyList);
 router.get('/host-family/:id',authChecker,findFamilyById);
 router.put('/host-family/:id/update',authChecker,UpdateHostFamilyValidation,UpdateFamily);
 router.delete('/host-family/:id/delete',authChecker,DeleteHostFamily);
-router.get('/host-family/:id/download-pdf',authChecker,GeneratePdf)
+router.get('/host-family/:id/download-pdf',authChecker,GeneratePdf);
+router.get('/host-family/:id/pdf',authChecker,HostFamilyDetailsPDF);
 
 // Study Group Routes 
 router.get('/study-group',authChecker,StudyGroupList);
@@ -74,5 +75,7 @@ router.delete('/employee/:id/delete',authChecker,DeleteEmployee)
 
 // pdf routes 
 router.get('/study-group/:group_id/certificate',authChecker,StudyGroupCertificatePDF);
+router.get('/study-group/:group_id/host-family/letter',authChecker,HostFamilyLetter);
+router.get('/study-group/:group_id/student/card',authChecker,GenerateIdCard)
 
 export default router;

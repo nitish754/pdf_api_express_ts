@@ -8,12 +8,12 @@ import { VerifyOldPassword } from "../helper/helper";
 
 export const SignUp: RequestHandler = async (req, res, next) => {
     try {
-        let { first_name, email, password, confirm_password }: IUserData = req.body;
+        let { first_name,last_name, email, password, confirm_password }: IUserData = req.body;
         const user = await User.findOne({ email: email })
         if (user) return next(createHttpError(422, 'Email alreday registered with us'))
 
         const hashedPwd = await bcrypt.hash(password, 8)
-        const createUser = await User.create({ first_name, email, password: hashedPwd });
+        const createUser = await User.create({ first_name,last_name, email, password: hashedPwd });
         res.status(200).json({
             status: 'success',
             message: 'User created successfully',

@@ -23,3 +23,6 @@ export const formateDate = (isoDate:any) => {
     return formattedDate;
 
 }
+
+
+

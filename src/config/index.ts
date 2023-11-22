@@ -6,6 +6,7 @@ export const DB = process.env.DB!;
 export const PORT = process.env.PORT || 3000;
 export const JWT_KEY = process.env.JWT_KEY!;
 export const FRONTEND_URL = process.env.FRONTEND_URL!;
+export const API_KEY = process.env.API_KEY || 'ea071073495502c9b47feac5ea126977-5d2b1caa-e4acb341'
 
 /**
  * custom application configration 

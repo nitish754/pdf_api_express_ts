@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Html2Pdf</title>
+    <style type="text/css" media="all">
+        @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            vertical-align: middle;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        html,
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            color: #000000;
+            font-size: 14px;
+            height: 100%;
+            font-weight: 400;
+        }
+
+        table {
+            width: 100%;
+            caption-side: bottom;
+            border-collapse: collapse;
+        }
+
+        table th {
+            font-weight: 700;
+        }
+
+        table th span {
+            font-weight: normal;
+        }
+
+        .text-start {
+            text-align: left !important;
+        }
+
+        .text-center {
+            text-align: center !important;
+        }
+
+        .text-end {
+            text-align: right !important;
+        }
+
+        .text-white {
+            color: #fff !important;
+        }
+
+        .bg-red {
+            background-color: #b93337 !important;
+        }
+
+        .bg-blue {
+            background-color: #325fa0 !important;
+        }
+
+        .t-head {
+            height: 40px;
+            padding: 8px;
+            border-right: 2px solid #fff;
+        }
+
+        .t-head2 {
+            height: 40px;
+            padding: 8px;
+            border-right: 2px solid #fff;
+        }
+
+        .t-head:last-child,
+        .t-head2:last-child {
+            border-right: 0px;
+        }
+
+        .t-cell {
+            background-color: #f0f0f0;
+            padding: 8px;
+            border-bottom: 2px solid #cccccc;
+        }
+
+        .border-b-0 {
+            border-bottom: 0px !important;
+        }
+
+        .last-cell .t-cell {
+            border-bottom: none;
+        }
+
+        .heading {
+            background-color: #f0f0f0 !important;
+            height: 30px;
+        }
+
+        .bg-1 {
+            background-color: #fcfcfc !important;
+        }
+
+        .bg-2 {
+            background-color: #e1ebef !important;
+        }
+
+        .bg-3 {
+            background-color: #f2f6f8 !important;
+        }
+
+        .td-blank {
+            height: 30px;
+        }
+
+        .flex {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: end;
+            margin-bottom: 4px;
+        }
+
+        .flex .icon {
+            border-radius: 8px;
+            width: 36px;
+            height: 36px;
+            flex: 0 0 36px;
+            background-color: #b93337 !important;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .info-table {
+            margin-top: 120px;
+            margin-bottom: 40px;
+        }
+
+        .info-table .flex {
+            max-width: 300px;
+            margin-left: auto;
+        }
+
+        .header {
+            background-image: url(image/header.jpg);
+            background-repeat: no-repeat;
+            background-position: top;
+            background-size: cover;
+            width: 100%;
+            position: absolute;
+            z-index: -1;
+            height: 400px;
+            left: 0;
+            top: 0;
+        }
+
+
+        .qr-code {
+            margin-top: 20px;
+            margin-bottom: -1px;
+            text-align: right;
+        }
+
+        .img {
+            width: 200px;
+        }
+
+        footer {
+            background-image: url(image/footer.jpg);
+            height: 30px;
+            background-position: bottom;
+            background-size: 100%;
+            background-repeat: no-repeat;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .list {
+            list-style: none;
+        }
+
+        .list>li::before {
+            content: "\2022";
+            color: #b93337;
+            font-weight: bold;
+            display: inline-block;
+            width: 16px;
+            margin-left: -16px;
+        }
+
+        .list li {
+            margin-bottom: 10px;
+        }
+
+        .list li ul {
+            margin-top: 10px;
+            list-style-type: circle;
+        }
+
+        @media print {
+            .info-table {
+                margin-top: 60px;
+                margin-bottom: 30px;
+            }
+
+            .qr-code {
+                margin-bottom: -12px;
+            }
+        }
+
+        /* @page {
+            size: A4;
+            margin-left: 0;
+            margin-right: 0;
+            margin-top: 0.5in;
+            margin-bottom: 0.5in;
+        }
+        @page:first{
+            margin-top: 0;
+        } */
+    </style>
+</head>
+
+<body>
+    <!--  -->
+    <div class="header"></div>
+
+    <!-- page content start -->
+    <div id="page-content" style="width: 90%; margin: auto">
+        <table class="info-table">
+            <tr>
+                <td rowspan="4" style="width: 50%;">
+                    <img src="{{ headerInfo.logo }}" alt="logo" style="max-width:200px;">
+                </td>
+                <td class="text-end">
+                    <div class="flex">
+                        <span>{{ headerInfo.contact }}</span>
+                        <span class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path fill="currentColor"
+                                    d="M12.001 2c5.523 0 10 4.477 10 10s-4.477 10-10 10a9.954 9.954 0 0 1-5.03-1.355L2.005 22l1.352-4.968A9.953 9.953 0 0 1 2.001 12c0-5.523 4.477-10 10-10ZM8.593 7.3l-.2.008a.961.961 0 0 0-.372.1a1.293 1.293 0 0 0-.294.228c-.12.113-.188.211-.261.306A2.73 2.73 0 0 0 6.9 9.62c.002.49.13.967.33 1.413c.409.902 1.082 1.857 1.97 2.742c.214.213.424.427.65.626a9.448 9.448 0 0 0 3.84 2.046l.568.087c.185.01.37-.004.556-.013a1.99 1.99 0 0 0 .833-.231a4.83 4.83 0 0 0 .383-.22s.043-.028.125-.09c.135-.1.218-.171.33-.288c.083-.086.155-.187.21-.302c.078-.163.156-.474.188-.733c.024-.198.017-.306.014-.373c-.004-.107-.093-.218-.19-.265l-.582-.261s-.87-.379-1.402-.621a.497.497 0 0 0-.176-.041a.482.482 0 0 0-.378.127c-.005-.002-.072.055-.795.931a.35.35 0 0 1-.368.13a1.43 1.43 0 0 1-.191-.066c-.124-.052-.167-.072-.252-.108a6.025 6.025 0 0 1-1.575-1.003c-.126-.11-.243-.23-.363-.346a6.297 6.297 0 0 1-1.02-1.268l-.059-.095a.923.923 0 0 1-.102-.205c-.038-.147.061-.265.061-.265s.243-.266.356-.41c.11-.14.203-.276.263-.373c.118-.19.155-.385.093-.536c-.28-.684-.57-1.365-.868-2.041c-.059-.134-.234-.23-.393-.249c-.054-.006-.108-.012-.162-.016a3.385 3.385 0 0 0-.403.004l.201-.008Z" />
+                            </svg>
+                        </span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end">
+                    <div class="flex">
+                        <span>{{ headerInfo.email }}</span>
+                        <span class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                                    <path d="M0 0h24v24H0z" />
+                                    <path fill="currentColor"
+                                        d="M22 7.535V17a3 3 0 0 1-2.824 2.995L19 20H5a3 3 0 0 1-2.995-2.824L2 17V7.535l9.445 6.297l.116.066a1 1 0 0 0 .878 0l.116-.066L22 7.535z" />
+                                    <path fill="currentColor"
+                                        d="M19 4c1.08 0 2.027.57 2.555 1.427L12 11.797l-9.555-6.37a2.999 2.999 0 0 1 2.354-1.42L5 4h14z" />
+                                </g>
+                            </svg>
+                        </span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end">
+                    <div class="flex">
+                        <span>{{ headerInfo.website }}</span>
+                        <span class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path fill="currentColor"
+                                    d="M16.36 14c.08-.66.14-1.32.14-2c0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2m-5.15 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95a8.03 8.03 0 0 1-4.33 3.56M14.34 14H9.66c-.1-.66-.16-1.32-.16-2c0-.68.06-1.35.16-2h4.68c.09.65.16 1.32.16 2c0 .68-.07 1.34-.16 2M12 19.96c-.83-1.2-1.5-2.53-1.91-3.96h3.82c-.41 1.43-1.08 2.76-1.91 3.96M8 8H5.08A7.923 7.923 0 0 1 9.4 4.44C8.8 5.55 8.35 6.75 8 8m-2.92 8H8c.35 1.25.8 2.45 1.4 3.56A8.008 8.008 0 0 1 5.08 16m-.82-2C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2c0 .68.06 1.34.14 2M12 4.03c.83 1.2 1.5 2.54 1.91 3.97h-3.82c.41-1.43 1.08-2.77 1.91-3.97M18.92 8h-2.95a15.65 15.65 0 0 0-1.38-3.56c1.84.63 3.37 1.9 4.33 3.56M12 2C6.47 2 2 6.5 2 12a10 10 0 0 0 10 10a10 10 0 0 0 10-10A10 10 0 0 0 12 2Z" />
+                            </svg>
+                        </span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end">
+                    <div class="flex">
+                        <span>{{ headerInfo.address1 }}<br>
+                            {{ headerInfo.address2 }}</span>
+                        <span class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 32 32">
+                                <path fill="currentColor"
+                                    d="M16 2A11.013 11.013 0 0 0 5 13a10.889 10.889 0 0 0 2.216 6.6s.3.395.349.452L16 30l8.439-9.953c.044-.053.345-.447.345-.447l.001-.003A10.885 10.885 0 0 0 27 13A11.013 11.013 0 0 0 16 2Zm0 15a4 4 0 1 1 4-4a4.005 4.005 0 0 1-4 4Z" />
+                                <circle cx="16" cy="13" r="4" fill="none" />
+                            </svg>
+                        </span>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <div class="flex" style="justify-content: space-between; width: 100%; margin-bottom: 20px;">
+            <p>
+                Dear <b>{{ hostfamilyInfo.name }},</b><br>
+                I refer to previous correspondence and can advise that I have placed the following students with you:
+            </p>
+
+        </div>
+        <table>
+            <tbody>
+                <tr>
+                    <th class="text-start bg-red text-white t-head">NAME OF THE STUDENT</th>
+                    <th class="text-start bg-red text-white t-head">GENDER</th>
+                    <th class="text-start bg-red text-white t-head">COUNTRY</th>
+                </tr>
+                {{#each students }}
+                <tr>
+                    <th class="text-start t-cell heading border-b-0">{{ first_name }} {{ last_name }} </th>
+                    <td class="t-cell heading border-b-0">{{ gender }}</td>
+                    <td class="t-cell heading border-b-0">{{ nationality }}</td>
+                </tr>
+                <tr>
+                    <td class="text-start t-cell bg-1 border-b-0">Allergy:</td>
+                    <td class="text-start t-cell bg-1 border-b-0">{{ allergy }}</td>
+                    {{!-- <td class="text-start t-cell bg-1 border-b-0">-</td> --}}
+                </tr>
+                <tr>
+                    <td class="text-start t-cell bg-1 border-b-0">Special Needs:</td>
+                    <td class="text-start t-cell bg-1 border-b-0">{{ special_needs }}</td>
+                    {{!-- <td class="text-start t-cell bg-1 border-b-0">-</td> --}}
+                </tr>
+
+                {{/each }}
+
+
+            </tbody>
+        </table>
+        <div style="height: 50px;">&nbsp;</div>
+        <table>
+            <tbody>
+                <tr>
+                    <th class="text-center bg-blue text-white t-head" colspan="2">ADDITIONAL DETAILS:</th>
+                </tr>
+                <tr>
+                    <th class="text-start t-cell heading bg-2" style="width: 250px;">GROUP NAME:</th>
+                    <td class="text-start t-cell bg-3">{{ groupInfo.group_name }}</td>
+                </tr>
+                <tr>
+                    <th class="text-start t-cell heading bg-2">DATES:</th>
+                    <td class="text-start t-cell bg-3">{{ groupInfo.arrival }} - {{ departure }}</td>
+                </tr>
+                <tr>
+                    <th class="text-start t-cell heading bg-2">ARRIVE:</th>
+                    <td class="text-start t-cell bg-3">From {{ groupInfo.country_origin }}</td>
+                </tr>
+                <tr>
+                    <th class="text-start t-cell heading bg-2">COLLECTION TIME & LOCATION:</th>
+                    <td class="text-start t-cell bg-3">Group Arrives at Stansted Airport - Host families collection from
+                        meeting point at 17:30</td>
+                </tr>
+                <tr>
+                    <th class="text-start t-cell heading bg-2">DEPART:</th>
+                    <td class="text-start t-cell bg-3">07/12/2023 - Drop Off at meeting point at 08:45am</td>
+                </tr>
+                <tr>
+                    <th class="text-start t-cell heading bg-2">PROGRAM:</th>
+                    <td class="text-start t-cell bg-3">Will be issued by WhatsApp (This will have everything you need to
+                        know, what they will be doing each day and times etc.)</td>
+                </tr>
+
+                <tr>
+                    <th class="text-start t-cell heading bg-2">AGE:</th>
+                    <td class="text-start t-cell bg-3">11 - 12 years old- From Spain - To be taken and collect to school
+                        every day.</td>
+                </tr>
+                <tr class="last-cell">
+                    <th class="text-start t-cell heading bg-2">MOBILE PHONE NUMBERS:</th>
+                    <td class="text-start t-cell bg-3">Must get the students numbers on day of arrival, in case of any
+                        emergencies or needing to contact the students for whatever reason</td>
+                </tr>
+
+            </tbody>
+        </table>
+
+        <h3 style="margin: 20px auto; color: #b93337;" class="text-center">NEWCASTLE LANGUAGE SCHOOL HOST FAMILY TERMS &
+            CONDITIONS:</h3>
+        <p>Newcastle Language School, henceforth referred to as the company in this document, lists the following
+            guidelines to its Host Families to assist in an enjoyable and rewarding experience for both the visiting
+            students and the host families during a study holiday program.<br><br>
+            The company reminds Host Families that visiting students are children. It's probably their first time away
+            from home and they are nervous at the prospect of adapting to a foreign culture. We ask that you please
+            welcome in your home and treat them as you would want your own child treated if the roles were reversed.
+            There is often a reluctance to communicate in the early days of their stay. This is usually because they are
+            nervous about speaking English and should improve after a day or two.</p>
+        <h3 style="margin: 20px auto; color: #325fa0;">HOST FAMILY RESPOSIBILITIES:</h3>
+        <ul class="list">
+            <li><b>ARRIVAL/ DEPARTURE:</b> You will be informed of Arrival & Departure times for the students. You are
+                expected to collect them from the train station/ airport at arrival time and drop them off at departure
+                time.</li>
+            <li><b>COLLECTION:</b> Collection location is always from the train station or airport unless otherwise
+                informed.</li>
+            <li><b>1ST DAY RULE:</b> On their first full day, you must accompany them to and from school by bus and
+                assist them in buying a mega-rider for the week, for which they have their own money for, this is so
+                they feel confident enough to do it the rest of the week them self.</li>
+            <li><b>CONTACT NUMBERS:</b> Please ensure you take their phone numbers and give them yours, just in case
+                there's a need to make contact, or worse get lost.</li>
+            <li><b>COMMUNICATION:</b> Please encourage them to speak English. (Eating with them at evening meal times is
+                a perfect opportunity for this). Also note that students are not allowed out in the evenings unless
+                accompanied by a member of your family. Nor are they allowed to meet up with other students during the
+                evenings/weekends unless authorized by this school.</li>
+            <li><b>ADVICE:</b> We do not advise you allow your students out of an evening unless accompanied by a member
+                of the family, but should you allow them to go out please make sure you know who they are meeting and
+                which family they live with in case of an emergency and we need to contact them. (An emergency being
+                they do not show up home when you advise them to, in case they are lost etc.,)</li>
+            <li><b>HOST FAMILY DAYS:</b> (Usually Sundays) are for the student(s) to spend time with you and not left to
+                their own devices. We ask that you please enjoy an activity with them. Any activity you undertake must
+                be free of charge to the student. Any entertainment available to them, such as games and DVD's, must be
+                age appropriate.</li>
+            <li><b>ARRIVAL/ DEPARTURE:</b> Our food and meal-times are often different than in the student's country.
+                Please appreciate that, like most teenagers, their appetites are quite vigorous, so here are some
+                guidelines for meals:
+                <ul>
+                    <li>
+                        <b>Breakfast</b> should be a variety of cereals, toast, fruit juice, milk etc.
+                    </li>
+                    <li>
+                        <b>Packed Lunch</b> should include sandwiches or rolls with a substantial filling, such as ham,
+                        cheese, salami. (Ham and cheese is a popular filling) plus some crisps, yogurt, fruit and a
+                        drink.
+                    </li>
+                    <li>
+                        <b>Evening Meal</b> can be, Pizza & Chips, Burgers, salads, pasta dishes, fish & chips and at
+                        least one roast for that British experience.
+                    </li>
+                    <li>
+                        As Europeans eat later than us, they are often hungry before bedtime, so if you could make
+                        something available to them, glass of milk, biscuits, sandwich or suchlike; it is very much
+                        appreciated by them
+                    </li>
+                </ul>
+            </li>
+            <li><b>ACCOMMODATION:</b> Students are paying guests in your home so it is vital that their living
+                conditions are hygienic and tidy, together with clean towels and bedding Each one must have his/her own
+                bed (Camp beds and inflatables are unacceptable), a wardrobe, and drawers for clothing. It is never
+                acceptable to use unwashed bedding from previous student(s) for new arrivals.</li>
+            <li><b>LAUNDRY:</b> Students may need some washing doing, so please let them know that you could do it for
+                them if required.</li>
+            <li><b>SICKNESS PROCEEDURE:</b> If a student is taken ill, please notify us without delay. We would prefer
+                that a family member stays at home with them if they are too sick to attend school. If not, at least
+                allow them to stay at home until we can take the appropriate action. <br>In the event you are unable to
+                contact the emergency cover out of school hours, the procedure would be calling the emergency NHS line
+                to explain the student's symptoms and they will advise you as to what to do. If you need to take the
+                student to the walk-in center or A&E, you will need to contact their teachers to arrange for them to
+                meet you there as ultimately the teachers are responsible for the students while they are away, so they
+                can translate to the doctors and the students.<br>The Walk-in center & A&E will need to see their
+                medical card to claim the expenses back from the government, and will need to know the Host family
+                Address where they are staying.</li>
+            <li><b>OTHER INFORMATION:</b>
+                <ul>
+                    <li>
+                        <b>MOVING STUDENTS:</b> Should it be necessary to move students from your home, you will only be
+                        paid for the days they have spent with you.
+                    </li>
+                    <li>
+                        <b>CHANGES TO DETAILS:</b> Please contact the Host Family Coordinator on 07596448654 if there
+                        are any problems with keeping to the conditions of this agreement and if you change any details
+                        will be needed in writing.
+                    </li>
+                    <li>
+                        <b>PAYMENTS:</b> Payments to you will be by bank transfer and paid before the student(s) arrives
+                        at £160 per week (7 nights and 8 days) per student (£22.85/per night). If a group comes for 6
+                        nights one night will be deduct so your total payment will be £138 per student.
+                    </li>
+                    <li>
+                        <b>NEWCASTLE LANGUAGE SCHOOL ARE NOT LIABLE FOR ANY DAMAGES CAUSED BY THE STUDENTS.</b> We
+                        advise you have adequate insurance in place for having guests in your home. However, if it is
+                        deliberate damage we can act as a liaison between you and the accompanying adults with the
+                        students to resolve any issues. (However, this can only be dealt with if the damage is seen
+                        prior to the student's departure).
+                    </li>
+                </ul>
+            </li>
+
+        </ul>
+    </div>
+    <!-- page content end -->
+    <!-- footer start -->
+    <div class="qr-code">
+        <img src="image/QR.jpg" alt="" class="img">
+    </div>
+    <footer></footer>
+    <!-- footer end -->
+
+</body>
+
+</html>

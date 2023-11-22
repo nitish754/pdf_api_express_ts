@@ -9,6 +9,10 @@ import Mpassport from './middleware/passport'
 import cookieParser from "cookie-parser";
 import cors from 'cors'
 import  hbs  from 'hbs'
+import path from 'path';
+// const path = require('path');
+
+
 
 const app = express()
 
@@ -21,7 +25,7 @@ app.get("/", (req,res,next) => {
     })
 })
 app.use(express.json())
-app.use(express.static('public'))
+app.use(express.static(path.join(__dirname,'public')));
 app.set('view engine', 'hbs');
 app.set('views',__dirname+'/views')
 app.use(passport.initialize())

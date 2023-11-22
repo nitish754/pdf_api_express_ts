@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Html2Pdf</title>
+    <style type="text/css" media="all">
+        @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            vertical-align: middle;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        html,
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            color: #000000;
+            font-size: 14px;
+            height: 100%;
+            font-weight: 400;
+        }
+
+
+        table {
+            width: 100%;
+            caption-side: bottom;
+            border-collapse: collapse;
+        }
+
+        table th {
+            font-weight: 700;
+        }
+
+        table th span {
+            font-weight: normal;
+        }
+
+        .text-start {
+            text-align: left !important;
+        }
+
+        .text-center {
+            text-align: center !important;
+        }
+
+        .text-end {
+            text-align: right !important;
+        }
+
+        .text-white {
+            color: #fff !important;
+        }
+
+        .bg-red {
+            background-color: #b93337 !important;
+        }
+
+        .bg-blue {
+            background-color: #325fa0 !important;
+        }
+
+        .t-head {
+            height: 40px;
+            padding: 8px;
+            border-right: 2px solid #fff;
+        }
+
+        .t-head2 {
+            height: 40px;
+            padding: 8px;
+            border-right: 2px solid #fff;
+        }
+
+        .t-head:last-child,
+        .t-head2:last-child {
+            border-right: 0px;
+        }
+
+        .t-cell {
+            background-color: #f0f0f0;
+            padding: 8px;
+            border-bottom: 2px solid #cccccc;
+        }
+
+        .last-cell .t-cell {
+            border-bottom: none;
+        }
+
+        .heading {
+            background-color: #f2f6f8 !important;
+            height: 30px;
+        }
+
+        .td-blank {
+            height: 30px;
+        }
+
+        .flex {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: end;
+            margin-bottom: 4px;
+        }
+
+        .flex .icon {
+            border-radius: 8px;
+            width: 36px;
+            height: 36px;
+            flex: 0 0 36px;
+            background-color: #b93337 !important;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+
+
+        .info-table {
+            margin-top: 120px;
+            margin-bottom: 40px;
+        }
+
+        .info-table .flex {
+            max-width: 300px;
+            margin-left: auto;
+        }
+
+        .header {
+            background-image: url(image/header.jpg);
+            background-repeat: no-repeat;
+            background-position: top;
+            background-size: cover;
+            width: 100%;
+            position: absolute;
+            z-index: -1;
+            height: 400px;
+            left: 0;
+            top: 0;
+        }
+
+
+        .qr-code {
+            margin-top: 20px;
+            margin-bottom: -1px;
+            text-align: right;
+        }
+
+        .img {
+            width: 200px;
+        }
+
+        footer {
+            background-image: url(image/footer.jpg);
+            height: 30px;
+            background-position: bottom;
+            background-size: 100%;
+            background-repeat: no-repeat;
+            bottom: 0;
+            width: 100%;
+        }
+
+        @media print {
+            .info-table {
+                margin-top: 60px;
+                margin-bottom: 30px;
+            }
+
+            .qr-code {
+                margin-bottom: -12px;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+    <!--  -->
+    <div class="header"></div>
+
+    <!-- page content start -->
+    <div id="page-content" style="width: 90%; margin: auto">
+        <table class="info-table">
+            <tr>
+                <td rowspan="4" style="width: 50%;">
+                    <img src="{{ headerInfo.logo }}" alt="logo" style="max-width:200px;">
+                </td>
+                <td class="text-end">
+                    <div class="flex">
+                        <span>{{ headerInfo.contact }}</span>
+                        <span class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path fill="currentColor"
+                                    d="M12.001 2c5.523 0 10 4.477 10 10s-4.477 10-10 10a9.954 9.954 0 0 1-5.03-1.355L2.005 22l1.352-4.968A9.953 9.953 0 0 1 2.001 12c0-5.523 4.477-10 10-10ZM8.593 7.3l-.2.008a.961.961 0 0 0-.372.1a1.293 1.293 0 0 0-.294.228c-.12.113-.188.211-.261.306A2.73 2.73 0 0 0 6.9 9.62c.002.49.13.967.33 1.413c.409.902 1.082 1.857 1.97 2.742c.214.213.424.427.65.626a9.448 9.448 0 0 0 3.84 2.046l.568.087c.185.01.37-.004.556-.013a1.99 1.99 0 0 0 .833-.231a4.83 4.83 0 0 0 .383-.22s.043-.028.125-.09c.135-.1.218-.171.33-.288c.083-.086.155-.187.21-.302c.078-.163.156-.474.188-.733c.024-.198.017-.306.014-.373c-.004-.107-.093-.218-.19-.265l-.582-.261s-.87-.379-1.402-.621a.497.497 0 0 0-.176-.041a.482.482 0 0 0-.378.127c-.005-.002-.072.055-.795.931a.35.35 0 0 1-.368.13a1.43 1.43 0 0 1-.191-.066c-.124-.052-.167-.072-.252-.108a6.025 6.025 0 0 1-1.575-1.003c-.126-.11-.243-.23-.363-.346a6.297 6.297 0 0 1-1.02-1.268l-.059-.095a.923.923 0 0 1-.102-.205c-.038-.147.061-.265.061-.265s.243-.266.356-.41c.11-.14.203-.276.263-.373c.118-.19.155-.385.093-.536c-.28-.684-.57-1.365-.868-2.041c-.059-.134-.234-.23-.393-.249c-.054-.006-.108-.012-.162-.016a3.385 3.385 0 0 0-.403.004l.201-.008Z" />
+                            </svg>
+                        </span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end">
+                    <div class="flex">
+                        <span>{{ headerInfo.email }}</span>
+                        <span class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                                    <path d="M0 0h24v24H0z" />
+                                    <path fill="currentColor"
+                                        d="M22 7.535V17a3 3 0 0 1-2.824 2.995L19 20H5a3 3 0 0 1-2.995-2.824L2 17V7.535l9.445 6.297l.116.066a1 1 0 0 0 .878 0l.116-.066L22 7.535z" />
+                                    <path fill="currentColor"
+                                        d="M19 4c1.08 0 2.027.57 2.555 1.427L12 11.797l-9.555-6.37a2.999 2.999 0 0 1 2.354-1.42L5 4h14z" />
+                                </g>
+                            </svg>
+                        </span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end">
+                    <div class="flex">
+                        <span>{{ headerInfo.website }}</span>
+                        <span class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path fill="currentColor"
+                                    d="M16.36 14c.08-.66.14-1.32.14-2c0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2m-5.15 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95a8.03 8.03 0 0 1-4.33 3.56M14.34 14H9.66c-.1-.66-.16-1.32-.16-2c0-.68.06-1.35.16-2h4.68c.09.65.16 1.32.16 2c0 .68-.07 1.34-.16 2M12 19.96c-.83-1.2-1.5-2.53-1.91-3.96h3.82c-.41 1.43-1.08 2.76-1.91 3.96M8 8H5.08A7.923 7.923 0 0 1 9.4 4.44C8.8 5.55 8.35 6.75 8 8m-2.92 8H8c.35 1.25.8 2.45 1.4 3.56A8.008 8.008 0 0 1 5.08 16m-.82-2C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2c0 .68.06 1.34.14 2M12 4.03c.83 1.2 1.5 2.54 1.91 3.97h-3.82c.41-1.43 1.08-2.77 1.91-3.97M18.92 8h-2.95a15.65 15.65 0 0 0-1.38-3.56c1.84.63 3.37 1.9 4.33 3.56M12 2C6.47 2 2 6.5 2 12a10 10 0 0 0 10 10a10 10 0 0 0 10-10A10 10 0 0 0 12 2Z" />
+                            </svg>
+                        </span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-end">
+                    <div class="flex">
+                        <span>{{ headerInfo.address1 }}<br>
+                            {{ headerInfo.address2 }}</span>
+                        <span class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 32 32">
+                                <path fill="currentColor"
+                                    d="M16 2A11.013 11.013 0 0 0 5 13a10.889 10.889 0 0 0 2.216 6.6s.3.395.349.452L16 30l8.439-9.953c.044-.053.345-.447.345-.447l.001-.003A10.885 10.885 0 0 0 27 13A11.013 11.013 0 0 0 16 2Zm0 15a4 4 0 1 1 4-4a4.005 4.005 0 0 1-4 4Z" />
+                                <circle cx="16" cy="13" r="4" fill="none" />
+                            </svg>
+                        </span>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <h3 class="text-center" style="color: #707070; margin-bottom: 20px; color: #000000;"><strong>HOST FAMILY
+                INFORMATION</strong></h3>
+
+        <table>
+            <tbody>
+
+                <tr>
+                    <th class="text-start t-cell heading">FULL NAME</th>
+                    <th class="text-start t-cell ">{{ hostfamilyInfo.personal_info.full_name }}</th>
+                </tr>
+                <tr>
+                    <td class="text-start t-cell"><strong>ADDRESS</strong></td>
+                    <td class="text-start t-cell">{{ hostfamilyInfo.personal_info.address }}</td>
+                </tr>
+                <tr>
+                    <td class="text-start t-cell"><strong>POST CODE</strong></td>
+                    <td class="text-start t-cell">{{ hostfamilyInfo.personal_info.postal_code }}</td>
+                </tr>
+                <tr>
+                    <td class="text-start t-cell"><strong>CONTACT NUMBER</strong></td>
+                    <td class="text-start t-cell">{{ hostfamilyInfo.personal_info.contact }}</td>
+                </tr>
+                <tr>
+                    <td class="text-start t-cell"><strong>BUS ROUTE</strong></td>
+                    <td class="text-start t-cell">{{ hostfamilyInfo.specifications.bus_route }}</td>
+                </tr>
+                <tr>
+                    <td class="text-start t-cell"><strong>EMAIL</strong></td>
+                    <td class="text-start t-cell">{{ hostfamilyInfo.personal_info.email }}</td>
+                </tr>
+                <tr>
+                    <td class="text-start t-cell"><strong>Bank</strong></td>
+                    <td class="text-start t-cell">{{ hostfamilyInfo.bank_details.bank_name }}</td>
+                </tr>
+                <tr>
+                    <td class="text-start t-cell"><strong>ACCOUNT</strong></td>
+                    <td class="text-start t-cell">{{ hostfamilyInfo.bank_details.account_number }}</td>
+                </tr>
+                <tr>
+                    <td class="text-start t-cell"><strong>SORT CODE</strong></td>
+                    <td class="text-start t-cell">{{ hostfamilyInfo.bank_details.sort_code }}</td>
+                </tr>
+                <tr>
+                    <td class="text-start t-cell"><strong>NO. BEDROOMS</strong></td>
+                    <td class="text-start t-cell">{{ hostfamilyInfo.personal_info.no_of_bedroom }}</td>
+                </tr>
+                <tr>
+                    <td class="text-start t-cell"><strong>NO. BEDROOMS FOR STUDENTS</strong></td>
+                    <td class="text-start t-cell">{{ hostfamilyInfo.personal_info.no_of_bedroom_for_student }}</td>
+                </tr>
+                {{!-- <tr>
+                    <td class="text-start t-cell"><strong>NO. STUDENTS</strong></td>
+                    <td class="text-start t-cell">{{ hostfamilyInfo.personal_info.address }}</td>
+                </tr> --}}
+                <tr>
+                    <td class="text-start t-cell"><strong>PREFERENCE</strong></td>
+                    <td class="text-start t-cell">{{ hostfamilyInfo.personal_info.preference }}</td>
+                </tr>
+                <tr>
+                    <td class="text-start t-cell"><strong>BED TYPES AND NUMBER</strong></td>
+                    <td class="text-start t-cell">{{ hostfamilyInfo.personal_info.bed_type }}</td>
+                </tr>
+                <tr>
+                    <td class="text-start t-cell"><strong>NO. BATHROOMS</strong></td>
+                    <td class="text-start t-cell">{{ hostfamilyInfo.personal_info.no_of_bathroom }}</td>
+                </tr>
+                <tr>
+                    <td class="text-start t-cell"><strong>OTHER PEOPLE IN HOUSE</strong></td>
+                    <td class="text-start t-cell">{{ hostfamilyInfo.specifications.other_people_in_house }}</td>
+                </tr>
+                <tr>
+                    <td class="text-start t-cell"><strong>PETS</strong></td>
+                    <td class="text-start t-cell">{{ hostfamilyInfo.personal_info.pets_at_home }}</td>
+                </tr>
+                <tr>
+                    <td class="text-start t-cell"><strong>ALLERGIES</strong></td>
+                    <td class="text-start t-cell">{{ hostfamilyInfo.specifications.allergies }}</td>
+                </tr>
+                <tr>
+                    <td class="text-start t-cell"><strong>WIFI</strong></td>
+                    <td class="text-start t-cell">
+                        {{#if hostfamilyInfo.specifications.is_wifi}}
+                        Yes
+                        {{else}}
+                        No
+                        {{/if}}
+                        {{!-- {{ (hostfamilyInfo.specifications.is_wifi) ? 'Yes':'No' }} --}}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-start t-cell"><strong>ACCESS TO TV/SKY ETC</strong></td>
+                    <td class="text-start t-cell">
+                        {{#if hostfamilyInfo.specifications.access_to_tv}}
+                        Yes
+                        {{else}}
+                        No
+                        {{/if}}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-start t-cell"><strong>TRANSPORT</strong></td>
+                    <td class="text-start t-cell">{{ hostfamilyInfo.specifications.transport }}</td>
+                </tr>
+                <tr>
+                    <td class="text-start t-cell"><strong>SMOKERS</strong></td>
+                    <td class="text-start t-cell">
+                        {{#if hostfamilyInfo.specifications.is_smokers}}
+                        Yes
+                        {{else}}
+                        No
+                        {{/if}}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-start t-cell"><strong>ACCOMMODATE A SMOKER</strong></td>
+                    <td class="text-start t-cell">
+                        {{#if hostfamilyInfo.specifications.is_accomodate_smoker}}
+                        Yes
+                        {{else}}
+                        No
+                        {{/if}}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-start t-cell"><strong>ACCOMMODATE FOOD INTOLERANCES</strong></td>
+                    <td class="text-start t-cell">
+                        {{#if hostfamilyInfo.specifications.accomodate_food_intolerance}}
+                        Yes
+                        {{else}}
+                        No
+                        {{/if}}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-start t-cell"><strong>SPARE TIME ACTIVITIES/HOBBIES</strong></td>
+                    <td class="text-start t-cell">{{ hostfamilyInfo.specifications.spare_time_activities }}</td>
+                </tr>
+                <tr>
+                    <td class="text-start t-cell"><strong>PREFERRED COMMUNICATION METHOD</strong></td>
+                    <td class="text-start t-cell">{{ hostfamilyInfo.specifications.preffered_communication_method }}
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+
+        <h3 style="margin: 20px auto; color: #b93337;">VISIT REPORT :</h3>
+        <div style="text-align: left;">
+            Very nicely decorated and furnished. Very clean, new house. Not a large house, but nicely laid out.
+            Bunk bed is standard in bedroom, single bed is moved in as needed. Bathrooms shared with family.
+            Lives with her daughter who allowed students to use her room previously, but due to damage, mess, and
+            disrespect she is not willing to do this again so the maximum for Magda is 3 students. Magda has both a
+            dog and a cat. Magda enjoys social activities with friends and time with her daughter
+        </div>
+    </div>
+    <!-- page content end -->
+    <!-- footer start -->
+    <div class="qr-code">
+        <img src="image/QR.jpg" alt="" class="img">
+    </div>
+    <footer></footer>
+    <!-- footer end -->
+
+</body>
+
+</html>
