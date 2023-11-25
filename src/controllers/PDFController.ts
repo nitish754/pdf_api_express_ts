@@ -134,7 +134,7 @@ export const StudyGroupCertificatePDF: RequestHandler = async (req, res, next) =
     baseUrl: `${req.protocol}://${req.get('host')}`, // http://localhost:3000
 
   };
-  const pdf_name = `${groupInfo?.group_name}_certificate.pdf`;
+  const pdf_name = `${groupInfo?.group_name.replace(/ /g, "_")}_certificate.pdf`;
   const pdfURL = `${pdfTemplatePath.output}${pdf_name}`;
 
   const options = {
