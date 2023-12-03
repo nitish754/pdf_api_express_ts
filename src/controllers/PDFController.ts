@@ -8,8 +8,9 @@ import GroupStudent from '../model/GroupStudent';
 import { BSON, ObjectId } from 'bson';
 import mongoose from 'mongoose';
 import StudyGroup from '../model/StudyGroup';
-import { FilterStudentByFamilyId, formateDate } from '../helper/helper';
+import { SendEmail, formateDate } from '../helper/helper';
 import { headerInfo, pdfTemplatePath } from '../config';
+import { Mail } from '../Repository/EmailServiceFactory';
 
 export const viewHTML: RequestHandler = (req, res, next) => {
   res.render('invoice');
@@ -158,11 +159,20 @@ export const StudyGroupCertificatePDF: RequestHandler = async (req, res, next) =
     });
 
     const buffer = await htmlPDF.create(content, options);
-    // res.attachment(`${groupInfo?.group_name}_certificate.pdf`);
-    // res.end(buffer);
+    let mailPayload = {
+      from : "Info@newcastleschooluk.com",
+      to :  `${groupInfo?.tour_guide_email}`,
+      subject : `Study Group Report ${}`,
+      html : `Hi ${groupInfo?.tour_guide}, </br> Please find the attached Report`,
+      attachment : buffer
+    }
+    // send email using email factory 
+
+   Mail.CreateEmail()?.sendEmail(mailPayload.from,mailPayload.to,mailPayload.subject,mailPayload.html,mailPayload.attachment);
+
     res.json({
       status: 'success',
-      message: 'Pdf generated successfully',
+      message: 'Email sent successfully',
       pdf_url: `${req.protocol}://${req.get('host')}/${pdf_name}`
     });
   } catch (error) {
@@ -265,6 +275,16 @@ export const HostFamilyLetter: RequestHandler = async (req, res, next) => {
       const buffer = await htmlPDF.create(content, options);
       // res.attachment(`${groupInfo?.group_name}_certificate.pdf`);
       // res.end(buffer);
+
+      // send email to host family 
+      let mailPayload = {
+        from : "Info@newcastleschooluk.com",
+        to :  `${family.personal_info.email}`,
+        subject : `Host Family Letter : ${groupInfo?.group_name}`,
+        html : `Hi ${groupInfo?.tour_guide}, </br> Please find the attached Report`,
+        attachment : buffer
+      }
+      Mail.CreateEmail()?.sendEmail(mailPayload.from,mailPayload.to,mailPayload.subject,mailPayload.html,mailPayload.attachment);
 
     });
     res.json({
