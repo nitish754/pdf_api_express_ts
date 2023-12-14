@@ -79,10 +79,12 @@ export const UpdateUser: RequestHandler = async (req, res, next) => {
                 return next(createHttpError(422, 'Old password does not matched with current password'));
             }
             else {
-                // update new password 
-                await User.findByIdAndUpdate(req.user?._id, {
-                    password: await bcrypt.hash(payload.password, 8)
-                })
+                // delete old_password property form payload 
+                delete payload.old_password;
+                // encrypt new password 
+                payload.password = await bcrypt.hash(payload.password,8);
+                // update user profle with password  
+                await User.findByIdAndUpdate(req.user?._id, payload);
             }
 
         }

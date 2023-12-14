@@ -7,7 +7,7 @@ export interface IBranch extends Document{
     address : string,
     postal_code : string,
     country : string,
-    contact_numer : string,
+    contact_number : string,
     email : string,
     land_line : string
 }
@@ -37,7 +37,7 @@ const BranchSchema : Schema = new Schema({
         type : String,
         default : null
     },
-    contact_numer : {
+    contact_number : {
         type : String,
         default : null
     },

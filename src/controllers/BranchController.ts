@@ -9,7 +9,7 @@ export const FetchBranch: RequestHandler = async (req, res, next) => {
         let search = req.query.search;
         if(search)
         {
-            filter = {$or:[{ 'branch_name': new RegExp( `${search}`,'i')},{ 'postal_code': new RegExp( `${search}`,'i')},{ 'contact_numer': new RegExp( `${search}`,'i')},{ 'email': new RegExp( `${search}`,'i')},{ 'city': new RegExp( `${search}`,'i')}]};
+            filter = {$or:[{ 'branch_name': new RegExp( `${search}`,'i')},{ 'postal_code': new RegExp( `${search}`,'i')},{ 'contact_number': new RegExp( `${search}`,'i')},{ 'email': new RegExp( `${search}`,'i')},{ 'city': new RegExp( `${search}`,'i')}]};
         }
 
         const branches = await Branch.find(filter).sort({ _id: -1 });
@@ -66,7 +66,7 @@ export const UpdateBranch: RequestHandler = async (req, res, next) => {
         let payload = req.body;
         const checkBranch=  await Branch.findOne({branch_name:payload.branch_name});
 
-        if(checkBranch?._id !== req.params.id.toString())
+        if(checkBranch?._id.toString() !== req.params.id.toString())
         {
             return next(createHttpError(422,"Branch name already exist"));
         }

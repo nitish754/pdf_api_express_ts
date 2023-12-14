@@ -1,6 +1,7 @@
 import { RequestHandler } from "express";
 import createHttpError from "http-errors";
 import GroupStudent from "../model/GroupStudent";
+import HostFamily from "../model/HostFamily";
 
 
 
@@ -85,9 +86,9 @@ export const FetchGroupStudent: RequestHandler = async (req, res, next) => {
         if(!group_id)
         {
             if (search) {
-                filter = { $and: [{ study_group_id: null }, { $or: [{ first_name: new RegExp(`${search}`, 'i') }, { last_name: new RegExp(`${search}`, 'i') }, { email: new RegExp(`${search}`, 'i') }] }] }
+                filter = { $and: [{ host_family_id: null }, { $or: [{ first_name: new RegExp(`${search}`, 'i') }, { last_name: new RegExp(`${search}`, 'i') }, { email: new RegExp(`${search}`, 'i') }] }] }
             } else {
-                filter = { study_group_id: null };
+                filter = { host_family_id: null };
             }
         }
         
@@ -158,17 +159,55 @@ export const DeleteGroupStudent: RequestHandler = async (req, res, next) => {
 
 export const AssignHostFamily: RequestHandler = async (req, res, next) => {
     try {
-        const assignFamily = await GroupStudent.findByIdAndUpdate(req.params.id, {
-            host_family_id: req.body.host_family_id
-        })
-        if (assignFamily) {
-            res.status(204).json({
-                status: 'success',
-                message: 'Host Family Assigned successfully'
+        if(req.body.host_family_id)
+        {
+            // check if no of bed is available 
+            const hostfamily = await HostFamily.findById(req.body.host_family_id);
+            if(hostfamily)
+            {
+                let total_bed = hostfamily.personal_info.total_no_of_bed;
+                let occoupied_bed = await GroupStudent.find({host_family_id : req.body.host_family_id}).count();
+
+                if(occoupied_bed >= parseInt(total_bed))
+                {
+                    return next(createHttpError(422,"No bed available for assignment"));
+                }
+
+                await GroupStudent.findByIdAndUpdate(req.params.id, {
+                    host_family_id: req.body.host_family_id
+                })
+            }else{
+                return next(createHttpError(422,"Invalid Host Family Id"));
+            }
+            
+        }
+        else{
+            await GroupStudent.findByIdAndUpdate(req.params.id, {
+                host_family_id: null
             })
         }
+        res.status(204).json({
+            status: 'success',
+            message: 'Host Family Assigned successfully'
+        })
     } catch (error) {
         return next(createHttpError.InternalServerError);
     }
 }
+
+// export const RemoveHostFamily: RequestHandler = async (req, res, next) => {
+//     try {
+//         const assignFamily = await GroupStudent.findByIdAndUpdate(req.params.id, {
+//             host_family_id: req.body.host_family_id
+//         })
+//         if (assignFamily) {
+//             res.status(204).json({
+//                 status: 'success',
+//                 message: 'Host Family Assigned successfully'
+//             })
+//         }
+//     } catch (error) {
+//         return next(createHttpError.InternalServerError);
+//     }
+// }
 

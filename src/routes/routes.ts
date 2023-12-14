@@ -63,14 +63,14 @@ router.put('/study-group/student/:id/assign-host-family',authChecker,AssignHostF
 router.post('/branch',authChecker,AddBranchPayload, AddBranch);
 router.get('/branches',authChecker,FetchBranch);
 router.get('/branch/:id',authChecker,GetBranchById)
-router.put('branch/:id/update',authChecker,UpdateBranchPayload,UpdateBranch)
+router.put('/branch/:id/update',authChecker,UpdateBranchPayload,UpdateBranch)
 router.delete('/branch/:id/delete',authChecker,DeleteBranch)
 
 // employee
 router.post('/employee',authChecker,AddEmployeePayload, AddEmployee);
 router.get('/employees',authChecker,FetchEmployee);
 router.get('/employee/:id',authChecker,FetchEmployeeById)
-router.put('employee/:id/update',authChecker,UpdateEmployeePayload,UpdateEmployee)
+router.put('/employee/:id/update',authChecker,UpdateEmployeePayload,UpdateEmployee)
 router.delete('/employee/:id/delete',authChecker,DeleteEmployee)
 
 // pdf routes 

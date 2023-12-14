@@ -36,6 +36,6 @@ export const GroupStudentSchema = {
         contact_number: Joi.string().allow('').label('Contact Number')
     }),
     AssignHostFamily: Joi.object().keys({
-        host_family_id: Joi.string().required().label('Host Family Id')
+        host_family_id: Joi.string().allow('').label('Host Family Id')
     })
 }

@@ -21,6 +21,7 @@ export const UserSchema = {
         position: Joi.string().allow('').label('Position'),
         nationality: Joi.string().allow('').label('Nationality'),
         password: Joi.string().allow('').label('Password'),
-        old_password: Joi.string().allow('').label('Old Password')
+        old_password: Joi.string().allow('').label('Old Password'),
+        program_name : Joi.string().allow('').label('Program Name')
     })
 }

@@ -33,10 +33,9 @@ const UserSchema:Schema = new Schema({
         type: String,
         default: null
     },
-
     email :{
         type : String,
-        unique : true
+        default : null
     },
     mobile : {
         type  : String,
@@ -51,6 +50,10 @@ const UserSchema:Schema = new Schema({
         default : null
     },
     nationality : {
+        type : String,
+        default : null
+    },
+    program_name : {
         type : String,
         default : null
     },
