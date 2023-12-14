@@ -10,10 +10,10 @@ export interface IUser extends Document{
     dob : Date,
     position : string,
     nationality : string,
-    program_name : string, 
     password : string,
     verifyToken : string,
-    isUserVerified : boolean
+    isUserVerified : boolean,
+    created_by : string
 }
 
 const UserSchema:Schema = new Schema({
@@ -33,10 +33,9 @@ const UserSchema:Schema = new Schema({
         type: String,
         default: null
     },
-
     email :{
         type : String,
-        unique : true
+        default : null
     },
     mobile : {
         type  : String,
@@ -62,6 +61,10 @@ const UserSchema:Schema = new Schema({
         type : String,
         default : null
     },
+    profile_url : {
+        type : String,
+        default : null
+    },
     verifyToken : {
         type : String,
         default : null
@@ -69,7 +72,11 @@ const UserSchema:Schema = new Schema({
     isUserVerified : {
         type : Boolean,
         default : false
+    },
+    created_by : {
+        type : Schema.Types.ObjectId,
+        default : null
     }
-})
+},{timestamps:true})
 
 export default model<IUser>("User",UserSchema)
